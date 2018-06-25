@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="OAuth\" />
+    <Folder Include="CRM\" />
+    <Folder Include="OAuth\Common\" />
+    <Folder Include="CRM\Library\" />
+    <Folder Include="CRM\Library\Setup\" />
+    <Folder Include="CRM\Library\Setup\Restclient\" />
+    <Folder Include="CRM\Library\Common\" />
+    <Folder Include="CRM\Library\Common\ConfigFileHandler\" />
+    <Folder Include="OAuth\Client\" />
+    <Folder Include="OAuth\Contract\" />
+    <Folder Include="OAuth\ClientApp\" />
+    <Folder Include="CRM\Library\Api\" />
+    <Folder Include="CRM\Library\Api\Handler\" />
+    <Folder Include="CRM\Library\Setup\Users\" />
+    <Folder Include="CRM\Library\CRUD\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="MySql.Data" Version="8.0.11" />
+  </ItemGroup>
+</Project>
