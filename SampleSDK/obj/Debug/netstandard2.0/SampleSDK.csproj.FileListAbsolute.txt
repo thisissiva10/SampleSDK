@@ -1,0 +1,9 @@
+/Users/test/Projects/SampleSDK/SampleSDK/bin/Debug/netstandard2.0/SampleSDK.deps.json
+/Users/test/Projects/SampleSDK/SampleSDK/bin/Debug/netstandard2.0/SampleSDK.dll
+/Users/test/Projects/SampleSDK/SampleSDK/bin/Debug/netstandard2.0/SampleSDK.pdb
+/Users/test/Projects/SampleSDK/SampleSDK/obj/Debug/netstandard2.0/SampleSDK.csproj.CoreCompileInputs.cache
+/Users/test/Projects/SampleSDK/SampleSDK/obj/Debug/netstandard2.0/SampleSDK.AssemblyInfoInputs.cache
+/Users/test/Projects/SampleSDK/SampleSDK/obj/Debug/netstandard2.0/SampleSDK.AssemblyInfo.cs
+/Users/test/Projects/SampleSDK/SampleSDK/obj/Debug/netstandard2.0/SampleSDK.dll
+/Users/test/Projects/SampleSDK/SampleSDK/obj/Debug/netstandard2.0/SampleSDK.pdb
+/Users/test/Projects/SampleSDK/SampleSDK/obj/Debug/netstandard2.0/SampleSDK.csprojResolveAssemblyReference.cache

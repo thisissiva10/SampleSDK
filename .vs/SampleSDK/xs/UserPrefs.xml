@@ -1,0 +1,35 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="SampleSDK/OAuth/ClientApp/ZohoOAuthDBPersistence.cs">
+    <Files>
+      <File FileName="SampleSDK/OAuth/ClientApp/ZohoOAuthDBPersistence.cs" Line="53" Column="17" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SampleSDK" expanded="True">
+            <Node name="SampleSDK" expanded="True">
+              <Node name="CRM" expanded="True">
+                <Node name="Library" expanded="True">
+                  <Node name="Api" expanded="True">
+                    <Node name="Handler" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="OAuth" expanded="True">
+                <Node name="ClientApp" expanded="True">
+                  <Node name="ZohoOAuthDBPersistence.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
