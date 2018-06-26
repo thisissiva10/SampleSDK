@@ -2,12 +2,17 @@
 using System.Configuration;
 using System.Collections.Generic;
 using SampleSDK.CRM.Library.Common.ConfigFileHandler;
-
-using SampleSDK.CRM.Library;
+using Newtonsoft.Json.Linq;
 
 
 namespace SampleSDK.CRM.Library.Common
 {
+
+    public enum SortOrder { one, two }
+
+    public enum PhotoSize { stamp, thumb, original, favicon, medium }
+
+
     public class CommonUtil
     {
         public CommonUtil() { }
@@ -16,8 +21,17 @@ namespace SampleSDK.CRM.Library.Common
         //TODO: photoSize enum;
 
 
-        //TODO: Dictionary to Json Object method;
+        //TODO: Implement exception handling;
+        public static Dictionary<string, string> ConvertJObjectToDict(JObject json)
+        {
+            Dictionary<string, string> returnMap = new Dictionary<string, string>();
+            foreach(var keyValuePair in json)
+            {
+                returnMap.Add(keyValuePair.Key, keyValuePair.Value.ToString());
+            }
 
+            return returnMap;
+        }
 
 
 

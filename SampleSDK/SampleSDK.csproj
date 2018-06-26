@@ -20,6 +20,8 @@
     <Folder Include="CRM\Library\Api\Handler\" />
     <Folder Include="CRM\Library\Setup\Users\" />
     <Folder Include="CRM\Library\CRUD\" />
+    <Folder Include="CRM\Library\Api\Response\" />
+    <Folder Include="CRM\Library\CRMException\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />

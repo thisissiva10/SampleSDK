@@ -9,10 +9,12 @@ namespace SampleSDK.CRM.Library.Setup.Restclient
 
         //TODO: ThreadLocal Current_User_Mail_id;
 
-        public static Dictionary<string, string> StaticHeaders = new Dictionary<string, string>();
+        private static Dictionary<string, string> staticHeaders = new Dictionary<string, string>();
 
         //TODO: ThreadLocal Dynamic_Headers;
 
+
+        public static Dictionary<string, string> StaticHeaders { get => staticHeaders; set => staticHeaders = value; }
 
         public ZCRMRestClient() { }
 

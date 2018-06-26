@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace SampleSDK
 {
@@ -69,23 +70,14 @@ namespace SampleSDK
 
             var response = (HttpWebResponse)request.GetResponse();
 
-            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-            /*Console.WriteLine($"Response Status Code :{response.StatusCode}");
-            Console.WriteLine($"Response Status Description :{response.StatusDescription}");
-            Console.WriteLine($"Supporte Headers :{response.SupportsHeaders}");
-            Console.WriteLine($"Headers :{response.Headers}");
-            */
-            Console.WriteLine(responseString);
+            string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
             return responseString;
         }
 
         //TODO: Throw Exceptions
         public string Get()
         {
-
             //TODO: Inspect the usage of ssl context;
-
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
             //TODO: Add user-agent header;
 
@@ -101,12 +93,6 @@ namespace SampleSDK
             using(StreamReader reader = new StreamReader(response.GetResponseStream())){
                 responseString = reader.ReadToEnd();
             }
-            /*Console.WriteLine($"Response Status Code :{response.StatusCode}");
-            Console.WriteLine($"Response Status Description :{response.StatusDescription}");
-            Console.WriteLine($"Supporte Headers :{response.SupportsHeaders}");
-            Console.WriteLine($"Headers :{response.Headers}");
-            */
-            Console.WriteLine(responseString);
             return responseString;
         }
 
