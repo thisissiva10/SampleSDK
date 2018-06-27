@@ -58,7 +58,7 @@ namespace SampleSDK.CRM.Library.Api.Response
         {
             if(APIConstants.FaultyResponseCodes.Contains(httpStatusCode))
             {
-                HandleFaultyResponses();
+                HandleFaultyResponse();
             }
             else if((HttpStatusCode == APIConstants.ResponseCode.ACCEPTED) || (HttpStatusCode == APIConstants.ResponseCode.OK) ||
                     (HttpStatusCode == APIConstants.ResponseCode.CREATED))
@@ -82,7 +82,7 @@ namespace SampleSDK.CRM.Library.Api.Response
         }
 
         //TODO: Handle exceptions;
-        protected virtual void HandleFaultyResponses() { }
+        protected virtual void HandleFaultyResponse() { }
 
         //TODO: HAndle Exceptions;
         protected virtual void ProcessDataResponse() { }

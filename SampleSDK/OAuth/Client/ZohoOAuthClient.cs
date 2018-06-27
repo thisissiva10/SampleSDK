@@ -81,6 +81,7 @@ namespace SampleSDK.OAuth.Client
                 ZohoOAuthTokens tokens = GetTokensFromJSON(responseJSON);
                 tokens.UserMaiilId = GetUserMailId(tokens.AccessToken);
                 ZohoOAuth.GetPersistenceHandlerInstance().SaveOAuthData(tokens);
+                Console.WriteLine(CRM.Library.Common.ZCRMConfigUtil.GetAuthenticationClass());
                 return tokens;
             }
 
@@ -125,6 +126,7 @@ namespace SampleSDK.OAuth.Client
             conn.AddHeader("Authorization", ZohoOAuthConstants.AuthHeaderPrefix + accessToken);
             string response = conn.Get();
             JObject responseJSON = JObject.Parse(response);
+
             return responseJSON["Email"].ToString();
         }
 

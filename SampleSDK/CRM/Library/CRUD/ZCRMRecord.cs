@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using SampleSDK.CRM.Library.Common;
 using SampleSDK.CRM.Library.Setup.Users;
-
+using SampleSDK.CRM.Library.Api.Response;
+using SampleSDK.CRM.Library.CRMException;
+using SampleSDK.CRM.Library.Api.Handler;
 
 namespace SampleSDK.CRM.Library.CRUD
 {
@@ -124,6 +126,49 @@ namespace SampleSDK.CRM.Library.CRUD
         }
 
         //TODO: Complete the remaining methods;
+
+
+        public APIResponse Create()
+        {
+            if(EntityId != null)
+            {
+                throw new ZCRMException("Entity ID MUST be NUL for Create Operation");
+            }
+            return EntityAPIHandler.GetInstance(this).CreateRecord();
+        }
+
+        public APIResponse Update()
+        {
+            if(EntityId == null)
+            {
+                throw new ZCRMException("Entity ID MUST NOT be NULl for update operation");
+            }
+            return EntityAPIHandler.GetInstance(this).UpdateRecord();
+        }
+
+        public APIResponse Delete()
+        {
+            if(EntityId == null)
+            {
+                throw new ZCRMException("Entity ID MUST NOT be NULL for Delete Operation");
+            }
+            return EntityAPIHandler.GetInstance(this).DeleteRecord();
+        }
+
+        public Dictionary<string, long> Convert()
+        {
+            return Convert(null);
+        }
+
+        private Dictionary<string, long> Convert(ZCRMRecord potential)
+        {
+            return Convert(potential, null);
+        }
+
+        private Dictionary<string, long> Convert(ZCRMRecord potential, ZCRMUser assignToUser)
+        {
+            return EntityAPIHandler.GetInstance(this).ConvertRecord(potential, assignToUser);
+        }
 
         //TODO<IMPORTANT>:Learn about the method completely before implementing the method;
         public object Clone()

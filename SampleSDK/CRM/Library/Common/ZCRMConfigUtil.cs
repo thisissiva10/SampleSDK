@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using SampleSDK.CRM.Library.Setup.Restclient;
 using SampleSDK.OAuth.Client;
+using SampleSDK.CRM.Library.CRMException;
+using SampleSDK.OAuth.Common;
 
 namespace SampleSDK.CRM.Library.Common
 {
@@ -8,21 +11,13 @@ namespace SampleSDK.CRM.Library.Common
     {
 
 
-
-        //TODO: Refer public naming conventions;
         private static Dictionary<string, string> configProperties = new Dictionary<string, string>();
-
-        public static Dictionary<string, string> ConfigProperties{
-            get { return configProperties; }
-            set { configProperties = value; }
-        }
         private static Boolean handleAuthentication = false;
 
         //TODO: Check whether set accessor is necessary;
-        public static Boolean HandleAuthentication {
-            get { return handleAuthentication;  }
-            set { handleAuthentication = value; }
-        }
+        public static Boolean HandleAuthentication { get => handleAuthentication; private set => handleAuthentication = value; }
+
+        public static Dictionary<string, string> ConfigProperties { get => configProperties; private set => configProperties = value; }
 
 
         public ZCRMConfigUtil() { }
@@ -54,7 +49,28 @@ namespace SampleSDK.CRM.Library.Common
 
 
         //TODO: Write LoadConfigProperties() method;
-        //TODO: Write GetAccessToken() method;
+
+
+        public static string GetAccessToken()
+        {
+
+            //TODO: Inspect the usage of catch claues;
+            string userMailId = ZCRMRestClient.GetCurrentUserEmail();
+
+            if((userMailId == null) && (ConfigProperties["currentUserEmail"] == null))
+            {
+                throw new ZCRMException("Current user must be either set in ZCRMRestClient or zcrm_configuration Config section");
+            }
+            if(userMailId == null)
+            {
+                userMailId = ConfigProperties["currentUserEmail"];
+            }
+            try
+            {
+                ZohoOAuthClient client = ZohoOAuthClient.GetInstance();
+                return client.GetAccessToken(userMailId);
+            }catch(ZohoOAuthException) { throw; }
+        }
 
 
         //TODO: Throw exception and complete the method;
@@ -117,7 +133,7 @@ namespace SampleSDK.CRM.Library.Common
             return HandleAuthentication;
         }
 
-        //Omitted getAllConfig(). The property ConfigProperty can be called for such request;
+        //NOTE: Omitted getAllConfig(). The property ConfigProperty can be called for such request;
 
     }
 

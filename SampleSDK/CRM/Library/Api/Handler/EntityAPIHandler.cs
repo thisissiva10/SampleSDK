@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using SampleSDK.CRM.Library.CRUD;
 using SampleSDK.CRM.Library.Api.Response;
 
@@ -24,10 +26,19 @@ namespace SampleSDK.CRM.Library.Api.Handler
         //TODO: Handle Exceptions;
         public APIResponse GetRecord()
         {
-            requestMethod = APIConstants.RequestMethod.GET;
-            urlPath = $"{record.ModuleAPIName}/{record.EntityId}";
+            try
+            {
+                requestMethod = APIConstants.RequestMethod.GET;
+                urlPath = $"{record.ModuleAPIName}/{record.EntityId}";
 
-            return null;
+                APIResponse response = APIRequest.GetInstance(this).GetAPIResponse();
+
+                JArray responseDataArray = (JArray)response.ResponseJSON.GetValue("data");
+                JObject recordDetails = (JObject)responseDataArray[0];
+                SetRecordProperties(recordDetails);
+
+                return null;
+            }
         }
 
         public APIResponse CreateRecord()
@@ -47,8 +58,18 @@ namespace SampleSDK.CRM.Library.Api.Handler
         }
 
 
-        public EntityAPIHandler()
+        public void SetRecordProperties(JObject recordDetails)
         {
+            SetRecordProperties(recordDetails, record);
+        }
+
+        public void SetRecordProperties(JObject recordJSON, ZCRMRecord record)
+        {
+            JObject recordDetails = new JObject(recordJSON);
+            foreach(KeyValuePair<string, JToken> token in recordDetails)
+            {
+                
+            }
         }
     }
 }
