@@ -2,9 +2,11 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="SampleSDK/CRM/Library/Api/Handler/ModuleAPIHandler.cs">
     <Files>
       <File FileName="SampleSDK/CRM/Library/Api/Handler/EntityAPIHandler.cs" Line="17" Column="9" />
-      <File FileName="SampleSDK/CRM/Library/Api/Handler/ModuleAPIHandler.cs" Line="24" Column="97" />
       <File FileName="SampleSDK/CRM/Library/CRUD/ZCRMModule.cs" Line="90" Column="45" />
-      <File FileName="SampleSDK/CRM/Library/CRUD/ZCRMModuleRelation.cs" Line="1" Column="1" />
+      <File FileName="SampleSDK/CRM/Library/CRUD/ZCRMLayout.cs" Line="35" Column="35" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/MetaDataAPIHandler.cs" Line="68" Column="14" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/ModuleAPIHandler.cs" Line="109" Column="30" />
+      <File FileName="SampleSDK/CRM/Library/CRUD/ZCRMSection.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
