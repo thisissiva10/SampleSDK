@@ -4,7 +4,7 @@ namespace SampleSDK.CRM.Library.CRUD
     public class ZCRMPriceBookPricing
     {
 
-        private long id;
+        private long? id;
         private double toRange;
         private double fromRange;
         private double discount;
@@ -21,7 +21,7 @@ namespace SampleSDK.CRM.Library.CRUD
             return new ZCRMPriceBookPricing(id);
         }
 
-        public long Id { get => id; set => id = value; }
+        public long? Id { get => id; set => id = value; }
 
         public double ToRange { get => toRange; set => toRange = value; }
 

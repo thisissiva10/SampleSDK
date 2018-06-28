@@ -20,7 +20,7 @@ namespace SampleSDK.CRM.Library.Api.Response
         //TODO: Handle exceptions;
         public APIResponse(HttpWebResponse response) : base(response) { }
 
-        protected ZCRMEntity Data { get => data; set => data = value; }
+        public ZCRMEntity Data { get => data; set => data = value; }
         public string Message { get => message; private set => message = value; }
         public string Status { get => status; private set => status = value; }
 
@@ -56,7 +56,7 @@ namespace SampleSDK.CRM.Library.Api.Response
         }
 
         //TODO: Handle Exceptions
-        protected override void HandleFaultyResponses()
+        protected override void HandleFaultyResponse()
         {
             if(HttpStatusCode == APIConstants.ResponseCode.NO_CONTENT)
             {

@@ -6,15 +6,15 @@ namespace SampleSDK.CRM.Library.CRUD
     public class ZCRMInventoryLineItem
     {
 
-        private long id;
+        private long? id;
         private ZCRMRecord product;
         private double listPrice;
         private double unitPrice;
         private double quantity;
         private string description;
         private double total;
-        private double discount;
-        private double discountPercentage;
+        private double? discount;
+        private double? discountPercentage;
         private double totalAfterDiscount;
         private double taxAmount;
         private double netTotal;
@@ -32,7 +32,7 @@ namespace SampleSDK.CRM.Library.CRUD
             Id = lineItemId;
         }
 
-        private static ZCRMInventoryLineItem GetInstance(long lineItemId)
+        public static ZCRMInventoryLineItem GetInstance(long lineItemId)
         {
             return new ZCRMInventoryLineItem(lineItemId);
         }
@@ -40,7 +40,7 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public ZCRMRecord Product { get => product; set => product = value; }
 
-        public long Id { get => id; set => id = value; }
+        public long? Id { get => id; set => id = value; }
 
         public string Description { get => description; set => description = value; }
 
@@ -52,7 +52,7 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public double Total { get => total; set => total = value; }
 
-        public double DiscountPercentage 
+        public double? DiscountPercentage 
         { 
             get => discountPercentage; 
             set 
@@ -62,7 +62,7 @@ namespace SampleSDK.CRM.Library.CRUD
             } 
         }
 
-        public double Discount
+        public double? Discount
         {
             get => discount;
             set

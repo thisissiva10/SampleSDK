@@ -29,7 +29,7 @@ namespace SampleSDK.CRM.Library.Api.Response
 
         protected APIConstants.ResponseCode? HttpStatusCode { get => httpStatusCode; private set => httpStatusCode = value; }
 
-        public JObject ResponseJSON { get => responseJSON; private set => responseJSON = value; }
+        internal JObject ResponseJSON { get => responseJSON; set => responseJSON = value; }
 
 
 

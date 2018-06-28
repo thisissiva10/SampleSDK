@@ -64,7 +64,8 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public Dictionary<string, object> Properties {  get => properties;  private set => properties = value; }
 
-        public Dictionary<string, object> FieldNameVsValue { get => fieldNameVsValue; set => fieldNameVsValue = value; }
+        //TODO: Note the property name is changed;
+        public Dictionary<string, object> Data { get => fieldNameVsValue; set => fieldNameVsValue = value; }
 
         public List<ZCRMInventoryLineItem> LineItems { get => lineItems; private set => lineItems = value; }
 
