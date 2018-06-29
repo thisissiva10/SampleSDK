@@ -4,6 +4,7 @@ using SampleSDK.CRM.Library.Setup.Restclient;
 using SampleSDK.OAuth.Client;
 using SampleSDK.CRM.Library.CRMException;
 using SampleSDK.OAuth.Common;
+using SampleSDK.CRM.Library.Api;
 
 namespace SampleSDK.CRM.Library.Common
 {
@@ -28,6 +29,11 @@ namespace SampleSDK.CRM.Library.Common
 
             //TODO: Get configProperties from configProperties from configFile;
             ConfigProperties = CommonUtil.ConfigFileSectionToDict("configuration");
+            //TODO: All of these have to be read dynamically from configuration settings or such file <IMPORTANT>;
+            ConfigProperties.Add("apiBaseUrl", "https://www.zohoapis.com");
+            ConfigProperties.Add("photoUrl", "https://profile.zoho.com/api/v1/user/self/photo");
+            ConfigProperties.Add("apiVersion", "v2");
+            ConfigProperties.Add("libraryVersion", "v1.3");
 
             Dictionary<string, string> keyValuePairs = CommonUtil.ConfigFileSectionToDict("zcrm_configuration");
             foreach (KeyValuePair<string, string> keyValues in keyValuePairs)
@@ -37,11 +43,13 @@ namespace SampleSDK.CRM.Library.Common
 
             if(initOAuth){
                 HandleAuthentication = true;
+                Console.WriteLine("Domain suffix contained : " + ConfigProperties.ContainsKey("domainSuffix"));
                 //TODO: Use try catch or corresponding exception handling;
                 ZohoOAuth.Initialize(ConfigProperties.ContainsKey("domainSuffix")?(string)ConfigProperties["domainSuffix"]:null);
             }
             if(ConfigProperties.ContainsKey("domainSuffix")){
-                UpdateConfigBaseUrl((string)ConfigProperties["domainSuffix"]);
+                Console.WriteLine("update method called");
+                UpdateConfigBaseUrl(ConfigProperties["domainSuffix"]);
             }
             //TODO: Log the information along with ConfigProperties;
 
@@ -79,20 +87,27 @@ namespace SampleSDK.CRM.Library.Common
             string accessType = GetAccessType();
             string domain = "www";
             //TODO: Get domain from api constants and correspondingly do the update in the local field;
-            /*if(){
-                
-            }*/
+            if(APIConstants.ACCESS_TYPE.ContainsKey(accessType)){
+                domain = APIConstants.ACCESS_TYPE[accessType];
+            }
+            else
+            {
+                domain = APIConstants.ACCESS_TYPE["Production"];
+            }
 
             switch (location)
             {
                 case "eu":
                     SetConfigValue(apiBaseUrl, "https://" + domain + ".zohoapis.eu");
+                    Console.WriteLine("eu");
                     break;
                 case "cn":
                     SetConfigValue(apiBaseUrl, "https://" + domain + ".zohoapis.com.cn");
+                    Console.WriteLine("cn");
                     break;
                 default:
                     SetConfigValue(apiBaseUrl, "https://" + domain + ".zohoapis.com");
+                    Console.WriteLine("com");
                     break;
             }
 
@@ -106,11 +121,18 @@ namespace SampleSDK.CRM.Library.Common
         }
 
         public static string GetConfigValue(string config){
-            return (string)ConfigProperties[config];
+            try
+            {
+                return (string)ConfigProperties[config];
+            }catch(KeyNotFoundException)
+            {
+                Console.WriteLine("Key not found exception : " + config);
+                return null;
+            }
         }
 
         public static string GetApiBaseURL(){
-            return GetConfigValue("apiBaseURL");
+            return GetConfigValue("apiBaseUrl");
         }
 
         public static string GetApiVersion(){

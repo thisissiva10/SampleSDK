@@ -21,7 +21,7 @@ namespace SampleSDK.CRM.Library.CRUD
         private object defaultValue;
 
         private int maxLength;
-        private int precesion;
+        private int precision;
         private int sequenceNo;
         private string toolTip;
         private string createdSource;
@@ -67,7 +67,7 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public int MaxLength { get => maxLength; set => maxLength = value; }
 
-        public int Precesion { get => precesion; set => precesion = value; }
+        public int Precision { get => precision; set => precision = value; }
 
         public List<string> SubLayoutsPresent { private get => subLayoutsPresent; set => subLayoutsPresent = value; }
 
@@ -90,7 +90,7 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public List<ZCRMPickListValue> PickListValues { get => pickListValues; private set => pickListValues = value; }
 
-        public void AddPickListVale(ZCRMPickListValue value)
+        public void AddPickListValue(ZCRMPickListValue value)
         {
             PickListValues.Add(value);
         }

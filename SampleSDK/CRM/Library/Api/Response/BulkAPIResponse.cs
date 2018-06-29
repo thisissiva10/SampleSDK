@@ -10,10 +10,10 @@ namespace SampleSDK.CRM.Library.Api.Response
 {
     
     //TODO<DUE-TOMORROW>: Needs some learning to implement this class;
-    public class BulkAPIResponse : CommonAPIResponse
+    public class BulkAPIResponse<T> : CommonAPIResponse where T : ZCRMEntity
     {
 
-        private List<ZCRMEntity> bulkData;
+        private List<T> bulkData;
         private ResponseInfo info;
         private List<EntityResponse> bulkEntitiesResponse;
 
@@ -26,7 +26,7 @@ namespace SampleSDK.CRM.Library.Api.Response
 
 
 
-        public List<ZCRMEntity> BulkData { get => bulkData; set => bulkData = value; }
+        public List<T> BulkData { get => bulkData; set => bulkData = value; }
        
         public ResponseInfo Info { get => info; private set => info = value; }
      
@@ -64,7 +64,7 @@ namespace SampleSDK.CRM.Library.Api.Response
             if((HttpStatusCode == APIConstants.ResponseCode.NO_CONTENT) || (HttpStatusCode == APIConstants.ResponseCode.NOT_MODIFIED))
             {
                 ResponseJSON = new JObject();
-                BulkData = new List<ZCRMEntity>();
+                BulkData = new List<T>();
             }
             else
             {

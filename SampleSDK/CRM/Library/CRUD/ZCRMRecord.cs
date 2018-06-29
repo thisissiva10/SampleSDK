@@ -64,7 +64,7 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public Dictionary<string, object> Properties {  get => properties;  private set => properties = value; }
 
-        //TODO: Note the property name is changed;
+        //TODO: Note the property name is changed<Inspect the usage;
         public Dictionary<string, object> Data { get => fieldNameVsValue; set => fieldNameVsValue = value; }
 
         public List<ZCRMInventoryLineItem> LineItems { get => lineItems; private set => lineItems = value; }
@@ -87,19 +87,19 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public void SetFieldValue(string fieldAPIName, object value)
         {
-            FieldNameVsValue.Add(fieldAPIName, value);
+            Data.Add(fieldAPIName, value);
         }
 
         public object GetFieldValue(string fieldAPIName)
         {
-            if(FieldNameVsValue.ContainsKey(fieldAPIName))
+            if(Data.ContainsKey(fieldAPIName))
             {
-                if(FieldNameVsValue[fieldAPIName] == null)
+                if(Data[fieldAPIName] == null)
                 {
                     return null;
                 }
 
-                return FieldNameVsValue[fieldAPIName];
+                return Data[fieldAPIName];
             }
             //TODO: Convert the Exception to ZCRMException;
             throw new Exception($"The given field is not present in this record - {fieldAPIName}");

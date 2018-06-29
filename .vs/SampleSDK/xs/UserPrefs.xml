@@ -1,12 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="SampleSDK/CRM/Library/Api/Handler/ModuleAPIHandler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SampleSDK/CRM/Library/Api/APIRequest.cs">
     <Files>
-      <File FileName="SampleSDK/CRM/Library/Api/Handler/EntityAPIHandler.cs" Line="17" Column="9" />
-      <File FileName="SampleSDK/CRM/Library/CRUD/ZCRMModule.cs" Line="90" Column="45" />
-      <File FileName="SampleSDK/CRM/Library/CRUD/ZCRMLayout.cs" Line="35" Column="35" />
-      <File FileName="SampleSDK/CRM/Library/Api/Handler/MetaDataAPIHandler.cs" Line="68" Column="14" />
-      <File FileName="SampleSDK/CRM/Library/Api/Handler/ModuleAPIHandler.cs" Line="109" Column="30" />
-      <File FileName="SampleSDK/CRM/Library/CRUD/ZCRMSection.cs" Line="1" Column="1" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/ModuleAPIHandler.cs" Line="32" Column="1" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/MassEntityAPIHandler.cs" Line="28" Column="224" />
+      <File FileName="SampleSDK/CRM/Library/Common/CommonUtil.cs" Line="63" Column="84" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/EntityAPIHandler.cs" Line="21" Column="10" />
+      <File FileName="SampleSDK/CRM/Library/Api/APIRequest.cs" Line="115" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

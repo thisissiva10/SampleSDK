@@ -39,6 +39,8 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 JObject recordDetails = (JObject)responseDataArray[0];
                 SetRecordProperties(recordDetails);
                 response.Data = record;
+                Console.WriteLine("Response Data JSON Array:");
+                Console.WriteLine(responseDataArray);
                 return response;
             }catch(Exception e)
             {

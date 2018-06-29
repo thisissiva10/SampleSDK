@@ -69,19 +69,21 @@ namespace SampleSDK.OAuth.Client
                 Console.WriteLine("Null Grant Token");
             }
             //TODO: Inspect the usage of Contract;
-
-            ZohoHTTPConnector conn = GetZohoConnector(ZohoOAuth.GetTokenURL());
+            Console.WriteLine("access token ok");
+            var conn = GetZohoConnector(ZohoOAuth.GetTokenURL());
             conn.AddParam("grant_type", "authorization_code");
             conn.AddParam("code", grantToken);
             string response = conn.Post();
 
+            Console.WriteLine("Request posted");
             Dictionary<string, string> responseJSON = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
 
             if(responseJSON.ContainsKey("access_token")){
+                Console.WriteLine("Response contains Access Token");
                 ZohoOAuthTokens tokens = GetTokensFromJSON(responseJSON);
                 tokens.UserMaiilId = GetUserMailId(tokens.AccessToken);
                 ZohoOAuth.GetPersistenceHandlerInstance().SaveOAuthData(tokens);
-                Console.WriteLine(CRM.Library.Common.ZCRMConfigUtil.GetAuthenticationClass());
+                //Console.WriteLine(CRM.Library.Common.ZCRMConfigUtil.GetAuthenticationClass());
                 return tokens;
             }
 
@@ -148,6 +150,7 @@ namespace SampleSDK.OAuth.Client
             if(responseDict.ContainsKey("refresh_token")){
                 tokens.RefreshToken = responseDict["refresh_token"];
             }
+            Console.WriteLine("Token Fetched from JSON");
             return tokens;
         }
     }

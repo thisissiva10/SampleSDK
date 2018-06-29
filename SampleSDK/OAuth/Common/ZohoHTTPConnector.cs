@@ -71,6 +71,7 @@ namespace SampleSDK
             var response = (HttpWebResponse)request.GetResponse();
 
             string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            Console.WriteLine(responseString);
             return responseString;
         }
 
@@ -93,6 +94,8 @@ namespace SampleSDK
             using(StreamReader reader = new StreamReader(response.GetResponseStream())){
                 responseString = reader.ReadToEnd();
             }
+            Console.WriteLine(responseString);
+
             return responseString;
         }
 

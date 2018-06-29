@@ -32,8 +32,6 @@ namespace SampleSDK.CRM.Library.Api.Response
         internal JObject ResponseJSON { get => responseJSON; set => responseJSON = value; }
 
 
-
-
         public CommonAPIResponse() { }
 
         public CommonAPIResponse(HttpWebResponse response)
@@ -86,6 +84,8 @@ namespace SampleSDK.CRM.Library.Api.Response
 
         //TODO: HAndle Exceptions;
         protected virtual void ProcessDataResponse() { }
+
+
 
 
         public override string ToString()

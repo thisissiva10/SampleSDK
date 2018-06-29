@@ -8,14 +8,16 @@ using Newtonsoft.Json.Linq;
 namespace SampleSDK.CRM.Library.Common
 {
 
-    public enum SortOrder { one, two }
 
-    public enum PhotoSize { stamp, thumb, original, favicon, medium }
 
 
     public class CommonUtil
     {
         public CommonUtil() { }
+
+        public enum SortOrder { asc, desc }
+
+        public enum PhotoSize { stamp, thumb, original, favicon, medium }
 
         //TODO: sortOrder enum;
         //TODO: photoSize enum;
@@ -56,6 +58,16 @@ namespace SampleSDK.CRM.Library.Common
             }
             return keyValuePairs;
 
+        }
+
+        internal static string CollectionToCommaDelimitedString(List<string> fields)
+        {
+            string retString = "";
+            foreach(string field in fields)
+            {
+                retString += field + ",";
+            }
+            return retString.TrimEnd(',');
         }
 
         //TODO: Time and date methods

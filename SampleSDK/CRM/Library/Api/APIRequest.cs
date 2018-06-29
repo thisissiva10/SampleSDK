@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.IO;
 using Newtonsoft.Json.Linq;
 using SampleSDK.CRM.Library.Common;
 using SampleSDK.CRM.Library.Api.Handler;
@@ -30,6 +31,8 @@ namespace SampleSDK.CRM.Library.Api
 
         private APIRequest(IAPIHandler handler)
         {
+            Console.WriteLine(url);
+            Console.WriteLine(handler.GetUrlPath());
             url = handler.GetUrlPath().Contains("http") ? handler.GetUrlPath() : url + handler.GetUrlPath();
             requestMethod = handler.GetRequestMethod();
             RequestHeaders = handler.GetRequestHeadersAsDict();
@@ -126,22 +129,29 @@ namespace SampleSDK.CRM.Library.Api
         {
             try
             {
+                Console.WriteLine("Static headers");
                 PopulateRequestHeaders(ZCRMRestClient.StaticHeaders);
                 //TODO<IMPORTANT- THREADLOCAL>:ZCRMRestClient.DYNAMIC_HEADERS-> Populate RequestHeaders if not null;
-                if (ZCRMRestClient.DYNAMIC_HEADERS != null)
+                if (ZCRMRestClient.DYNAMIC_HEADERS.IsValueCreated)
                 {
+                    Console.WriteLine("Dynamic Headers");
+                    Console.WriteLine(ZCRMRestClient.DYNAMIC_HEADERS.IsValueCreated);
+                    Console.WriteLine(ZCRMRestClient.DYNAMIC_HEADERS.Value);
                     PopulateRequestHeaders(ZCRMRestClient.GetDynamicHeaders());
                 }
                 else
                 {
+                    Console.WriteLine("Authenticating the request");
                     AuthenticateRequest();
                 }
                 SetQueryParams();
                 HttpWebRequest request = GetHttpWebRequestClient();
                 SetHeaders(ref request);
                 request.Method = requestMethod.ToString();
-                if (RequestBody != null)
+                if (RequestBody.Count > 0)
                 {
+                    Console.WriteLine(RequestBody.ToString());
+                    Console.WriteLine("Populating request body");
                     string dataString = RequestBody.ToString();
                     var data = Encoding.ASCII.GetBytes(dataString);
                     int dataLength = data.Length;
@@ -152,6 +162,8 @@ namespace SampleSDK.CRM.Library.Api
                     }
                 }
                 response = (HttpWebResponse)request.GetResponse();
+                string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                Console.WriteLine(responseString);
             }catch(Exception)
             {
                 throw;
@@ -164,25 +176,31 @@ namespace SampleSDK.CRM.Library.Api
 
         private HttpWebRequest GetHttpWebRequestClient()
         {
+            Console.WriteLine(url);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            int? timeoutPeriod = Convert.ToInt32(ZCRMConfigUtil.GetConfigValue("timeout"));
-            string userAgent = ZCRMConfigUtil.GetConfigValue("userAgent");
-            if(timeoutPeriod != null)
-            {
-                request.Timeout = (int)timeoutPeriod;
-            }
+            if(ZCRMConfigUtil.ConfigProperties.ContainsKey("timeout")){
+                int? timeoutPeriod = Convert.ToInt32(ZCRMConfigUtil.GetConfigValue("timeout"));
+                if (timeoutPeriod != null)
+                {
+                    request.Timeout = (int)timeoutPeriod;
+                }
 
+            }
+            string userAgent = ZCRMConfigUtil.GetConfigValue("userAgent");
             if(userAgent != null)
             {
                 request.UserAgent = userAgent;
             }
+            Console.WriteLine("Request object created");
             return request;
         }
 
         private void PopulateRequestHeaders(Dictionary<string, string> dict)
         {
+            Console.WriteLine("Inside Populate Request Headers");
             foreach(KeyValuePair<string, string> keyValuePair in dict)
             {
+                Console.WriteLine(keyValuePair.Key);
                 RequestHeaders.Add(keyValuePair.Key, keyValuePair.Value);
             }
         }
