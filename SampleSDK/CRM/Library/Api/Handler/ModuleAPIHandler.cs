@@ -63,7 +63,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 requestQueryParams.Add("module", module.ApiName);
                 requestHeaders.Add("If-Modified-Since", modifiedSince);
 
-                BulkAPIResponse<ZCRMLayout> response = APIRequest.GetInstance(this).GetBulkAPIResponse();
+                BulkAPIResponse<ZCRMLayout> response = APIRequest.GetInstance(this).GetBulkAPIResponse<ZCRMLayout>();
 
                 response.BulkData = GetAllLayouts(response.ResponseJSON);
                 return response;
@@ -88,7 +88,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 requestQueryParams.Add("module", module.ApiName);
                 requestHeaders.Add("If-Modified-Since", modifiedSince);
 
-                BulkAPIResponse<ZCRMField> response = APIRequest.GetInstance(this).GetBulkAPIResponse();
+                BulkAPIResponse<ZCRMField> response = APIRequest.GetInstance(this).GetBulkAPIResponse<ZCRMField>();
 
                 response.BulkData = GetAllFields(response.ResponseJSON);
                 return response;
@@ -115,7 +115,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 requestQueryParams.Add("module", module.ApiName);
                 requestHeaders.Add("If-Modified-Since", modifiedSince);
 
-                BulkAPIResponse<ZCRMCustomView> response = APIRequest.GetInstance(this).GetBulkAPIResponse();
+                BulkAPIResponse<ZCRMCustomView> response = APIRequest.GetInstance(this).GetBulkAPIResponse<ZCRMCustomView>();
 
                 response.BulkData = GetAllCustomViews(response.ResponseJSON);
                 return response;
@@ -165,7 +165,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 urlPath = "settings/related_lists";
                 requestQueryParams.Add("module", module.ApiName);
 
-                BulkAPIResponse<ZCRMModuleRelation> response = APIRequest.GetInstance(this).GetBulkAPIResponse();
+                BulkAPIResponse<ZCRMModuleRelation> response = APIRequest.GetInstance(this).GetBulkAPIResponse<ZCRMModuleRelation>();
 
                 response.BulkData = GetAllRelatedLists(response.ResponseJSON);
                 return response;
@@ -361,7 +361,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
         }
 
         //TODO: Handle all exceptions;
-        private List<ZCRMLayout> GetAllLayouts(JObject layoutsJSONObject)
+        public List<ZCRMLayout> GetAllLayouts(JObject layoutsJSONObject)
         {
             List<ZCRMLayout> allLayouts = new List<ZCRMLayout>();
             JArray layoutsArray = (JArray)layoutsJSONObject.GetValue("layouts");

@@ -60,14 +60,9 @@ namespace SampleSDK.CRM.Library.Common
 
         }
 
-        internal static string CollectionToCommaDelimitedString(List<string> fields)
+        internal static string CollectionToCommaDelimitedString<T>(List<T> fields)
         {
-            string retString = "";
-            foreach(string field in fields)
-            {
-                retString += field + ",";
-            }
-            return retString.TrimEnd(',');
+            return string.Join(",", fields);
         }
 
         //TODO: Time and date methods
@@ -75,6 +70,10 @@ namespace SampleSDK.CRM.Library.Common
         //TODO: PhotoSupported method
 
         //TODO: Check if validate file method is needed or not and implement if needed;
+        public static void ValidateFile(string filePath)
+        {
+            
+        }
 
         //TODO: Collection to comma delimited string method;
     }

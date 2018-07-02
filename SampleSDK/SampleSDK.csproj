@@ -22,6 +22,7 @@
     <Folder Include="CRM\Library\CRUD\" />
     <Folder Include="CRM\Library\Api\Response\" />
     <Folder Include="CRM\Library\CRMException\" />
+    <Folder Include="CRM\Library\Setup\MetaData\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />

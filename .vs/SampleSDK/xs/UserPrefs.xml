@@ -1,11 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="SampleSDK/CRM/Library/Api/APIRequest.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SampleSDK/CRM/Library/Common/CommonUtil.cs">
     <Files>
-      <File FileName="SampleSDK/CRM/Library/Api/Handler/ModuleAPIHandler.cs" Line="32" Column="1" />
-      <File FileName="SampleSDK/CRM/Library/Api/Handler/MassEntityAPIHandler.cs" Line="28" Column="224" />
-      <File FileName="SampleSDK/CRM/Library/Common/CommonUtil.cs" Line="63" Column="84" />
-      <File FileName="SampleSDK/CRM/Library/Api/Handler/EntityAPIHandler.cs" Line="21" Column="10" />
-      <File FileName="SampleSDK/CRM/Library/Api/APIRequest.cs" Line="115" Column="32" />
+      <File FileName="SampleSDK/CRM/Library/Api/Response/BulkAPIResponse.cs" Line="97" Column="5" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/RelatedListAPIHandler.cs" Line="293" Column="10" />
+      <File FileName="SampleSDK/CRM/Library/Common/CommonUtil.cs" Line="73" Column="9" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

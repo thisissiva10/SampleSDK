@@ -72,44 +72,6 @@ namespace SampleSDK.CRM.Library.Api.Response
             }
         }
 
-        public class EntityResponse
-        {
-            private JObject responseJSON;
-            private ZCRMEntity data;
-            private string status;
-            private string message;
-            private string code;
-            private JObject errorDetails;
-            private Dictionary<string, string> upsertedDetails = new Dictionary<string, string>();
-
-            public EntityResponse(JObject entityResponseJSON)
-            {
-                ResponseJSON = entityResponseJSON;
-                Status = Convert.ToString(entityResponseJSON.GetValue("status"));
-                Code = Convert.ToString(entityResponseJSON.GetValue("code"));
-                Message = Convert.ToString(entityResponseJSON.GetValue("message"));
-                if((ResponseJSON.ContainsKey("details")) && (Status.Equals("error")))
-                {
-                    ErrorDetails = (JObject)ResponseJSON.GetValue("details");
-                }
-                if(entityResponseJSON.ContainsKey("action"))
-                {
-                    upsertedDetails.Add("action", Convert.ToString(entityResponseJSON.GetValue("action")));
-                }
-                if(entityResponseJSON.ContainsKey("duplicate_field"))
-                {
-                    upsertedDetails.Add("duplicate_field", Convert.ToString(entityResponseJSON.GetValue("duplciate_field")));   
-                }
-            }
-
-            public JObject ResponseJSON { get => responseJSON; private set => responseJSON = value; }
-            public ZCRMEntity Data { get => data; set => data = value; }
-            public string Status { get => status; private set => status = value; }
-            public string Message { get => message; private set => message = value; }
-            public string Code { get => code; private set => code = value; }
-            public JObject ErrorDetails { get => errorDetails; private set => errorDetails = value; }
-        }
-
         //TODO: Inspect the usage of this class and learn about static classes and about access-modifiers;
         public class ResponseInfo
         {
@@ -132,6 +94,45 @@ namespace SampleSDK.CRM.Library.Api.Response
             public int PageNo { get => pageNo; private set => pageNo = value; }
             public int PerPage { get => perPage; private set => perPage = value; }
         }
-
     }
+
+
+        public class EntityResponse
+        {
+            private JObject responseJSON;
+            private ZCRMEntity data;
+            private string status;
+            private string message;
+            private string code;
+            private JObject errorDetails;
+            private Dictionary<string, string> upsertedDetails = new Dictionary<string, string>();
+
+            public EntityResponse(JObject entityResponseJSON)
+            {
+                ResponseJSON = entityResponseJSON;
+                Status = Convert.ToString(entityResponseJSON.GetValue("status"));
+                Code = Convert.ToString(entityResponseJSON.GetValue("code"));
+                Message = Convert.ToString(entityResponseJSON.GetValue("message"));
+                if ((ResponseJSON.ContainsKey("details")) && (Status.Equals("error")))
+                {
+                    ErrorDetails = (JObject)ResponseJSON.GetValue("details");
+                }
+                if (entityResponseJSON.ContainsKey("action"))
+                {
+                    upsertedDetails.Add("action", Convert.ToString(entityResponseJSON.GetValue("action")));
+                }
+                if (entityResponseJSON.ContainsKey("duplicate_field"))
+                {
+                    upsertedDetails.Add("duplicate_field", Convert.ToString(entityResponseJSON.GetValue("duplciate_field")));
+                }
+            }
+
+            public JObject ResponseJSON { get => responseJSON; private set => responseJSON = value; }
+            public ZCRMEntity Data { get => data; set => data = value; }
+            public string Status { get => status; private set => status = value; }
+            public string Message { get => message; private set => message = value; }
+            public string Code { get => code; private set => code = value; }
+            public JObject ErrorDetails { get => errorDetails; private set => errorDetails = value; }
+
+        }
 }

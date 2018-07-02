@@ -112,11 +112,11 @@ namespace SampleSDK.CRM.Library.Api
         }
 
         //TODO: Handle exceptions appropriately and Complete BulkAPIResponse class;
-        public BulkAPIResponse GetBulkAPIResponse()
+        public BulkAPIResponse<T> GetBulkAPIResponse<T>() where T : ZCRMEntity
         {
             try{
                 GetResponseFromServer();
-                return new BulkAPIResponse(response);
+                return new BulkAPIResponse<T>(response);
             }catch(ZCRMException)
             {
                 throw;

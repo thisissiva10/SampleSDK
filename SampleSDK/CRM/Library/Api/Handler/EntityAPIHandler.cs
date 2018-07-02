@@ -390,7 +390,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
         //TODO: Implement the remaining Methods;
        
         //TODO: After completing the sdk, try to serialize the objects directly instead of the implemented methods;
-        private JObject GetZCRMRecordAsJSON()
+        public JObject GetZCRMRecordAsJSON()
         {
             JObject recordJSON = new JObject();
             Dictionary<string, object> recordData = record.Data;

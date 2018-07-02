@@ -54,7 +54,7 @@ namespace SampleSDK.CRM.Library.Api.Response
         //TODO: Handle exceptions
         protected void ProcessResponse()
         {
-            if(APIConstants.FaultyResponseCodes.Contains(httpStatusCode))
+            if(APIConstants.FaultyResponseCodes.Contains(HttpStatusCode))
             {
                 HandleFaultyResponse();
             }

@@ -20,6 +20,38 @@ namespace SampleSDK.CRM.Library.Api.Handler
         }
 
 
+        //TODO: Handle Exceptions;
+        public BulkAPIResponse<ZCRMModule> GetAllModules(string modifiedSince)
+        {
+            try
+            {
+                requestMethod = APIConstants.RequestMethod.GET;
+                urlPath = "settings/modules/";
+                requestHeaders.Add("If-Modified-Since", modifiedSince);
+
+                BulkAPIResponse<ZCRMModule> response = APIRequest.GetInstance(this).GetBulkAPIResponse<ZCRMModule>();
+
+                JObject responseJSON = response.ResponseJSON;
+                List<ZCRMModule> allModules = new List<ZCRMModule>();
+
+                JArray modulesArray = (JArray)responseJSON.GetValue("modules");
+                foreach(JObject moduleDetails in modulesArray)
+                {
+                    allModules.Add(GetZCRMModule(moduleDetails));
+                }
+                response.BulkData = allModules;
+                return response;
+
+            }catch(Exception e)
+            {
+                //TODO: Log the info;
+                Console.WriteLine(e);
+                Console.WriteLine("Exception caught in GetAllModules");
+                throw new ZCRMException("ZCRM_INTERNAL_ERROR");
+            }
+        }
+
+
         //TODO: Handle Exception;
         public APIResponse GetModule(string apiName)
         {
@@ -46,7 +78,8 @@ namespace SampleSDK.CRM.Library.Api.Handler
 
 
         //TODO: Inspect the field modified_by in the response;
-        private ZCRMEntity GetZCRMModule(JObject moduleDetails)
+        //TODO: Returns ZCRMModule.. Inspect the method;
+        private ZCRMModule GetZCRMModule(JObject moduleDetails) 
         {
             ZCRMModule module = ZCRMModule.GetInstance(Convert.ToString(moduleDetails.GetValue("api_name")));
             module.Id = Convert.ToInt64(moduleDetails.GetValue("id"));
@@ -97,8 +130,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
             }
             if(moduleDetails.ContainsKey("layouts"))
             {
-                //TODO: Complete the below line after completing ModuleAPIHandler;
-               // module.Layouts = ModuleAPIHandler.GetInstance(module).GetAllLayouts();
+                module.Layouts = ModuleAPIHandler.GetInstance(module).GetAllLayouts(moduleDetails);
             }
             return module;
         }
