@@ -320,7 +320,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
             role.Label = (string)roleDetails["display_label"];
             role.AdminUser = (bool)roleDetails["admin_user"];
             ZCRMRole reportingTo = null;
-            if (roleDetails["reporting_to"] != null)
+            if (roleDetails["reporting_to"].Type != JTokenType.Null)
             {
                 JObject reportingToObject = (JObject)roleDetails["reporting_to"];
                 reportingTo = ZCRMRole.GetInstance((long)reportingToObject["id"], (string)reportingToObject["name"]);
