@@ -208,7 +208,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 }
                 requestQueryParams.Add("page", page.ToString());
                 requestQueryParams.Add("per_page", perPage.ToString());
-                requestQueryParams.Add("coneverted", isConverted);
+                requestQueryParams.Add("coneverted", isConverted);   
                 requestQueryParams.Add("approved", isApproved);
                 if(fields != null)
                 {
@@ -232,6 +232,8 @@ namespace SampleSDK.CRM.Library.Api.Handler
             }catch(Exception e)
             {
                 //TODO: Log the info;
+                Console.WriteLine("Exception in MassEntityAPIHandler.GetRecords");
+                Console.WriteLine(e);
                 throw new ZCRMException("ZCRM_INTERNA_ERROR", e.ToString());
             }
         }

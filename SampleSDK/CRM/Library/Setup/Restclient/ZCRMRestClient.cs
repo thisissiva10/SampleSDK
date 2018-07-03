@@ -2,6 +2,10 @@
 using System.Threading;
 using System.Collections.Generic;
 using SampleSDK.CRM.Library.Common;
+using SampleSDK.CRM.Library.Api.Response;
+using SampleSDK.CRM.Library.Api.Handler;
+using SampleSDK.CRM.Library.CRUD;
+using SampleSDK.CRM.Library.Setup.MetaData;
 
 namespace SampleSDK.CRM.Library.Setup.Restclient
 {
@@ -18,8 +22,6 @@ namespace SampleSDK.CRM.Library.Setup.Restclient
         public static Dictionary<string, string> StaticHeaders { get => staticHeaders; set => staticHeaders = value; }
 
 
-        public ZCRMRestClient() { }
-
         public static ZCRMRestClient GetInstance()
         {
             return new ZCRMRestClient();
@@ -35,7 +37,6 @@ namespace SampleSDK.CRM.Library.Setup.Restclient
         {
             ZCRMConfigUtil.Initialize(handleAuthentication);
         }
-
 
 
 
@@ -60,6 +61,48 @@ namespace SampleSDK.CRM.Library.Setup.Restclient
             return DYNAMIC_HEADERS.Value;
         }
 
-        //TODO: Handle all remianing methods!!;
+
+
+
+
+
+        public ZCRMOrganization GetOrganizationInstance()
+        {
+            return ZCRMOrganization.GetInstance();
+        }
+
+
+        public APIResponse GetOrganizationDetails()
+        {
+            return OrganizationAPIHandler.GetInstance().GetOrganizationDetails();
+        }
+
+
+        public ZCRMModule GetModuleInstance(string moduleAPIName)
+        {
+            return ZCRMModule.GetInstance(moduleAPIName);
+        }
+
+
+        public ZCRMRecord GetRecordInstance(string moduleAPIName, long entityId)
+        {
+            return ZCRMRecord.GetInstance(moduleAPIName, entityId);
+        }
+
+        public BulkAPIResponse<ZCRMModule> GetAllModules()
+        {
+            return GetAllModules(null);
+        }
+
+        public BulkAPIResponse<ZCRMModule> GetAllModules(string modifiedSince)
+        {
+            return MetaDataAPIHandler.GetInstance().GetAllModules(modifiedSince);
+        }
+
+
+        public APIResponse GetModule(string moduleName)
+        {
+            return MetaDataAPIHandler.GetInstance().GetModule(moduleName); 
+        }
     }
 }

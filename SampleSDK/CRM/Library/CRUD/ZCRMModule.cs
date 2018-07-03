@@ -4,6 +4,7 @@ using SampleSDK.CRM.Library.Common;
 using SampleSDK.CRM.Library.Api.Response;
 using SampleSDK.CRM.Library.Api.Handler;
 using SampleSDK.CRM.Library.Setup.Users;
+using SampleSDK.CRM.Library.CRMException;
 
 namespace SampleSDK.CRM.Library.CRUD
 {
@@ -79,10 +80,284 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public List<ZCRMProfile> AccessibleProfiles { get => accessibleProfiles; private set => accessibleProfiles = value; }
 
+
+
+
+
+        //TODO: Handle exceptions
+        //TODO: Inspect the usage of this function;
+        public BulkAPIResponse<ZCRMModuleRelation> GetRelatedLists()
+        {
+            return ModuleAPIHandler.GetInstance(this).GetAllRelatedLists();
+        }
+
+
+        //TODO: Handle exceptions
+        public BulkAPIResponse<ZCRMField> GetAllFields()
+        {
+            return GetAllFields(null);
+        }
+
+
+        //TODO: Handle exceptions
+        public BulkAPIResponse<ZCRMField> GetAllFields(string modifiedSince)
+        {
+            return ModuleAPIHandler.GetInstance(this).GetAllFields(modifiedSince);
+        }
+
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMLayout> GetLayouts()
+        {
+            return GetLayouts(null);
+        }
+
+
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMLayout> GetLayouts(string modifiedSince)
+        {
+            return ModuleAPIHandler.GetInstance(this).GetAllLayouts(modifiedSince);
+        }
+
+        //TODO: Handle exceptions;
+        public APIResponse GetLayoutDetails(long layoutId)
+        {
+            return ModuleAPIHandler.GetInstance(this).GetLayoutDetails(layoutId);
+        }
+
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMCustomView> GetCustomViews()
+        {
+            return GetCustomViews(null);
+        }
+
+
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMCustomView> GetCustomViews(string modifiedSince)
+        {
+            return ModuleAPIHandler.GetInstance(this).GetAllCustomViews(modifiedSince);
+        }
+
+
+
+        //TODO: Handle exceptions;
+        public APIResponse GetCustomView(long cvId)
+        {
+            return ModuleAPIHandler.GetInstance(this).GetCustomView(cvId);
+        }
+
+
+
+        public BulkAPIResponse<ZCRMRecord> CreateRecords(List<ZCRMRecord> records)
+        {
+            if (records == null || records.Count == 0)
+            {
+                throw new ZCRMException(" Records list MUST NOT be null for Create operation");
+            }
+            return MassEntityAPIHandler.GetInstance(this).CreateRecords(records);
+        }
+
+
+        public BulkAPIResponse<ZCRMRecord> UpdateRecords(List<long> entityIds, string fieldAPIName, object value)
+        {
+            if (entityIds == null || entityIds.Count == 0)
+            {
+                throw new ZCRMException("Entity ID list MUST NOT be null/empty for update operation");
+            }
+            return MassEntityAPIHandler.GetInstance(this).UpdateRecords(entityIds, fieldAPIName, value);
+        }
+
+
+
+        public BulkAPIResponse<ZCRMRecord> UpsertRecords(List<ZCRMRecord> records)
+        {
+            if(records == null || records.Count == 0)
+            {
+                throw new ZCRMException("Record ID list MUST NOT be null/empty for upsert operation");
+            }
+            return MassEntityAPIHandler.GetInstance(this).UpsertRecords(records);
+        }
+
+
+        public BulkAPIResponse<ZCRMEntity> DeleteRecords(List<long> entityIds)
+        {
+            if (entityIds == null || entityIds.Count == 0)
+            {
+                throw new ZCRMException("Entity ID list MUST NOT be null/empty for delete operation");
+            }
+            return MassEntityAPIHandler.GetInstance(this).DeleteRecords(entityIds);
+        }
+
+
         public APIResponse GetRecord(long entityId)
         {
             ZCRMRecord record = ZCRMRecord.GetInstance(ApiName, entityId);
             return EntityAPIHandler.GetInstance(record).GetRecord();
+        }
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetRecords()
+        {
+            return GetRecords(null, null);
+        }
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetRecords(long? cvId)
+        {
+            return GetRecords(cvId, null);
+        }
+
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetRecords(List<string> fields)
+        {
+            return GetRecords(null, fields);
+        }
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetRecords(long? cvId, List<string> fields)
+        {
+            return GetRecords(cvId, 1, 200, fields);
+        }
+
+
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetRecords(long? cvId, int page, int perPage, List<string> fields)
+        {
+            return GetRecords(cvId, null, null, page, perPage, fields);
+        }
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetRecords(long? cvId, string sortByField, CommonUtil.SortOrder? sortOrder, List<string> fields)
+        {
+            return GetRecords(cvId, sortByField, sortOrder, 1, 200,  fields);
+        }
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetRecords(long? cvId, string sortByField, CommonUtil.SortOrder? sortOrder, int page, int perPage, List<string> fields)
+        {
+            return GetRecords(cvId, sortByField, sortOrder, page, perPage, null, fields);
+        }
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetRecords(long? cvId, string sortByField, CommonUtil.SortOrder? sortOrder, int page, int perPage, string modifiedSince, List<string> fields)
+        {
+            return MassEntityAPIHandler.GetInstance(this).GetRecords(cvId, sortByField, sortOrder, page, perPage, modifiedSince, null, null, fields);
+        }
+
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetConvertedRecords(long? cvId, string sortByField, CommonUtil.SortOrder? sortOrder, int page, int perPage, string modifiedSince, List<string> fields)
+        {
+            return MassEntityAPIHandler.GetInstance(this).GetRecords(cvId, sortByField, sortOrder, page, perPage, modifiedSince, "true", null, fields);
+        }
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetUnConvertedRecords(long? cvId, string sortByField, CommonUtil.SortOrder? sortOrder, int page, int perPage, string modifiedSince, List<string> fields)
+        {
+            return MassEntityAPIHandler.GetInstance(this).GetRecords(cvId, sortByField, sortOrder, page, perPage, modifiedSince, "false", null , fields);
+        }
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetApprovedRecords(long? cvId, string sortByField, CommonUtil.SortOrder? sortOrder, int page, int perPage, string modifiedSince, List<string> fields)
+        {
+            return MassEntityAPIHandler.GetInstance(this).GetRecords(cvId, sortByField, sortOrder, page, perPage, modifiedSince, null, "true", fields);
+        }
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMRecord> GetUnApprovedRecords(long? cvId, string sortByField, CommonUtil.SortOrder? sortOrder, int page, int perPage, string modifiedSince, List<string> fields)
+        {
+            return MassEntityAPIHandler.GetInstance(this).GetRecords(cvId, sortByField, sortOrder, page, perPage, modifiedSince, null, "false", fields);
+        }
+
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMTrashRecord> GetAllDeletedRecords()
+        {
+            return MassEntityAPIHandler.GetInstance(this).GetAllDeletedRecords();
+        }
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMTrashRecord> GetRecycleBinRecords()
+        {
+            return MassEntityAPIHandler.GetInstance(this).GetRecycleBinRecords();
+        }
+
+        //TODO: Handle Exceptions
+        public BulkAPIResponse<ZCRMTrashRecord> GetPermanentlyDeletedRecords()
+        {
+            return MassEntityAPIHandler.GetInstance(this).GetPermanentlyDeletedRecords();
+        }
+
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMRecord> SearchByText(string value)
+        {
+            return MassEntityAPIHandler.GetInstance(this).SearchByText(value, 1, 200);
+        }
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMRecord> SearchByText(string value, int page, int perPage)
+        {
+            return MassEntityAPIHandler.GetInstance(this).SearchByText(value, page, perPage);
+        }
+
+
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMRecord> SearchByCriteria(string value)
+        {
+            return MassEntityAPIHandler.GetInstance(this).SearchByCriteria(value, 1, 200);
+        }
+
+
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMRecord> SearchByCriteria(string value, int page, int perPage)
+        {
+            return MassEntityAPIHandler.GetInstance(this).SearchByCriteria(value, page, perPage);
+        }
+
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMRecord> SearchByPhone(string value)
+        {
+            return MassEntityAPIHandler.GetInstance(this).SearchByPhone(value, 1, 200);
+        }
+
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMRecord> SearchByPhone(string value, int page, int perPage)
+        {
+            return MassEntityAPIHandler.GetInstance(this).SearchByPhone(value, page, perPage);
+        }
+
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMRecord> SearchByEmail(string value)
+        {
+            return MassEntityAPIHandler.GetInstance(this).SearchByEmail(value, 1, 200);
+        }
+
+        //TODO: Handle exceptions;
+        public BulkAPIResponse<ZCRMRecord> SearchByEmail(string value, int page, int perPage)
+        {
+            return MassEntityAPIHandler.GetInstance(this).SearchByEmail(value, page, perPage);
         }
 
         public void AddAccessibleProfiles(ZCRMProfile profile)
@@ -90,7 +365,7 @@ namespace SampleSDK.CRM.Library.CRUD
             AccessibleProfiles.Add(profile);
         }
 
-        //TODO: Complete the remaining functions;
+
 
     }
 }

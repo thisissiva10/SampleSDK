@@ -7,7 +7,7 @@ namespace SampleSDK.CRM.Library.CRUD
     public class ZCRMNote : ZCRMEntity
     {
 
-        private long id;
+        private long? id;
         private string title;
         private string content;
         private ZCRMRecord parentRecord;
@@ -39,7 +39,7 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public ZCRMRecord ParentRecord { get => parentRecord; private set => parentRecord = value; }
 
-        public long Id { get => id; set => id = value; }
+        public long? Id { get => id; set => id = value; }
 
         public string Title { get => title; set => title = value; }
 
@@ -63,5 +63,25 @@ namespace SampleSDK.CRM.Library.CRUD
         {
             Attachments.Add(attachment);
         }
+
+
+        /*
+         * 
+        public APIResponse UploadAttachment(string filePath)
+        {
+            return ZCRMModuleRelation.GetInstance(ZCRMRecord.GetInstance("Notes", id), "Attachments").UploadAttachment(filePath);
+        }
+
+        public APIResponse DownloadAttachment(long attachmentId)
+        {
+            return ZCRMModuleRelation.GetInstance(ZCRMRecord.GetInstance("Notes", id), "Attachments").DownloadAttachment(attachmentId);
+        }
+
+        public APIResponse DeleteAttachment(long attachmentId)
+        {
+            return ZCRMModuleRelation.GetInstance(ZCRMRecord.GetInstance("Notes", id), "Attachments").DeleteAttachment(attachmentId);
+        }
+
+*/
     }
 }

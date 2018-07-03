@@ -280,6 +280,40 @@ namespace SampleSDK.CRM.Library.Api.Handler
             }
         }
 
+
+
+        public BulkAPIResponse<ZCRMRole> GetAllRoles()
+        {
+            try
+            {
+                requestMethod = APIConstants.RequestMethod.GET;
+                urlPath = "settings/roles";
+
+                BulkAPIResponse<ZCRMRole> response = APIRequest.GetInstance(this).GetBulkAPIResponse<ZCRMRole>();
+
+                List<ZCRMRole> allRoles = new List<ZCRMRole>();
+                JObject responseJSON = response.ResponseJSON;
+                JArray rolesArray = (JArray)responseJSON.GetValue("roles");
+                foreach (JObject roleDetails in rolesArray)
+                {
+                    allRoles.Add(GetZCRMRole(roleDetails));
+                }
+                response.BulkData = allRoles;
+                return response;
+            }
+            catch (Exception e)
+            {
+                //TODO: Handle exceptions and log the exceptions;
+                Console.WriteLine("Exception in GetAllRoles");
+                Console.WriteLine(e);
+                throw new ZCRMException("ZCRM_INTERNAL_ERROR");
+            }
+        }
+
+
+
+
+
         //TODO: Handle exceptions;
         private ZCRMRole GetZCRMRole(JObject roleDetails)
         {
@@ -498,7 +532,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
             }
         }
 
-        public BulkAPIResponse<ZCRMOrgTax> UpdateTAxes(List<ZCRMOrgTax> taxes)
+        public BulkAPIResponse<ZCRMOrgTax> UpdateTaxes(List<ZCRMOrgTax> taxes)
         {
             if (taxes.Count > 100)
             {

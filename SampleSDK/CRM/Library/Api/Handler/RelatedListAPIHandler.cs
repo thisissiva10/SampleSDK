@@ -188,7 +188,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
 
 
         //TODO: Handle Exception;
-        public BulkAPIResponse<ZCRMAttachment> GetAllAttachmentDetails(int page, int perPage, string modifiedSince)
+        public BulkAPIResponse<ZCRMAttachment> GetAllAttachmentsDetails(int page, int perPage, string modifiedSince)
         {
             try{
                 requestMethod = APIConstants.RequestMethod.GET;
@@ -426,6 +426,14 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 relatedDetailsJSON.Add(keyValuePairs.Key, (JToken)value);
             }
             return relatedDetailsJSON;
+        }
+
+        public APIResponse DeleteRelation()
+        {
+            requestMethod = APIConstants.RequestMethod.DELETE;
+            urlPath = $"{parentRecord.ModuleAPIName}/{parentRecord.EntityId}/{junctionRecord.ApiName}/{junctionRecord.Id}";
+
+            return APIRequest.GetInstance(this).GetAPIResponse();
         }
     }
 }

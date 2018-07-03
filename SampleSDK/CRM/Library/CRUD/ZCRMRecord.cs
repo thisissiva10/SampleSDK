@@ -39,7 +39,7 @@ namespace SampleSDK.CRM.Library.CRUD
         public ZCRMRecord(string module) : this(module, null) { }
 
 
-        public static ZCRMRecord GetInstance(string moduleAPIName, long entityId)
+        public static ZCRMRecord GetInstance(string moduleAPIName, long? entityId)
         {
             return new ZCRMRecord(moduleAPIName, entityId);
         }
@@ -171,11 +171,155 @@ namespace SampleSDK.CRM.Library.CRUD
             return EntityAPIHandler.GetInstance(this).ConvertRecord(potential, assignToUser);
         }
 
+
+        public BulkAPIResponse<ZCRMRecord> GetRelatedListRecords(string relatedListAPIName)
+        {
+            return GetRelatedListRecords(relatedListAPIName, 1, 20);
+        }
+
+        public BulkAPIResponse<ZCRMRecord> GetRelatedListRecords(string relatedListAPIName, int page, int perPage)
+        {
+            return GetRelatedListRecords(relatedListAPIName, null, null, page, perPage, null);
+        }
+
+        public BulkAPIResponse<ZCRMRecord> GetRelatedListRecords(string relatedListAPIName, string sortByField, CommonUtil.SortOrder? sortOrder)
+        {
+            return GetRelatedListRecords(relatedListAPIName, sortByField, sortOrder, 1, 20, null);
+        }
+
+        public BulkAPIResponse<ZCRMRecord> GetRelatedListRecords(string relatedListAPIName, string sortByField, CommonUtil.SortOrder? sortOrder, int page, int perPage, string modifiedSince)
+        {
+            return ZCRMModuleRelation.GetInstance(this, relatedListAPIName).GetRecords(sortByField, sortOrder, page, perPage, modifiedSince);
+        }
+
+
+      /*  public BulkAPIResponse<> GetNotes()
+        {
+            return GetNotes(1, 20);
+        }
+
+
+        public BulkAPIResponse<> GetNotes(int page, int perPage)
+        {
+            return GetNotes(null, null, page, perPage, null);
+        }
+
+
+        public BulkAPIResponse<> GetNotes(string sortByField, CommonUtil.SortOrder? sortOrder)
+        {
+            return GetNotes(sortByField, sortOrder, 1, 20, null);
+        }
+
+        public BulkAPIResponse<> GetNotes(string sortByField, CommonUtil.SortOrder? sortOrder, int page, int perPage, string modifiedSince)
+        {
+            return ZCRMModuleRelation.GetInstance(this, "Notes").GetNotes(sortByField, sortOrder, page, perPage, modifiedSince);
+        }
+
+*/
+
+        public APIResponse AddNote(ZCRMNote note)
+        {
+            if(note.Id != null)
+            {
+                throw new ZCRMException("Note ID MUST be null for Create Operation");
+            }
+            return ZCRMModuleRelation.GetInstance(this, "Notes").AddNote(note);
+        }
+
+
+        public APIResponse UpdateNote(ZCRMNote note)
+        {
+            if (note.Id == null)
+            {
+                throw new ZCRMException("Note ID MUST NOT be null for Update Operation");
+            }
+            return ZCRMModuleRelation.GetInstance(this, "Notes").AddNote(note);
+        }
+
+        public APIResponse DeleteNote(ZCRMNote note)
+        {
+            if (note.Id == null)
+            {
+                throw new ZCRMException("Note ID MUST be null for Delete Operation");
+            }
+            return ZCRMModuleRelation.GetInstance(this, "Notes").AddNote(note);
+        }
+
+
+
+        public BulkAPIResponse<ZCRMAttachment> GetAllAttachmentDetails()
+        {
+            return GetAllAttachmentsDetails(0, 20, null);
+        }
+
+
+        public BulkAPIResponse<ZCRMAttachment> GetAllAttachmentsDetails(int page, int perPage, string modifiedSince)
+        {
+            return ZCRMModuleRelation.GetInstance(this, "Attachments").GetAllAttachmentsDetails(page, perPage, modifiedSince);
+        }
+
+
+        /*
+
+        public APIResponse UploadAttachment(String filePath)
+        {
+            return ZCRMModuleRelation.GetInstance(this, "Attachments").UploadAttachment(filePath);
+        }
+
+*/
+
+        public APIResponse UploadLinkAsAttachment(String attachmentUrl)
+        {
+            return ZCRMModuleRelation.GetInstance(this, "Attachments").UploadLinkAsAttachment(attachmentUrl);
+        }
+        /*
+        public APIResponse DownloadAttachment(long attachmentId)
+        {
+            return ZCRMModuleRelation.GetInstance(this, "Attachments").DownloadAttachment(attachmentId);
+        }
+
+*/
+
+        public APIResponse DeleteAttachment(long attachmentId)
+        {
+            return ZCRMModuleRelation.GetInstance(this, "Attachments").DeleteAttachment(attachmentId);
+        }
+
+        /*
+
+        public APIResponse UploadPhoto(string filePath)
+        {
+            return EntityAPIHandler.GetInstance(this).UploadPhoto(filePath);
+        }
+
+        public APIResponse DownloadPhoto()
+        {
+            return EntityAPIHandler.GetInstance(this).DeletePhoto();
+        }
+
+*/
+        public APIResponse AddRelation(ZCRMJunctionRecord junctionRecord)
+        {
+            return ZCRMModuleRelation.GetInstance(this, junctionRecord).AddRelation();
+        }
+
+
+        public APIResponse DeleteRelation(ZCRMJunctionRecord junctionRecord)
+        {
+            return ZCRMModuleRelation.GetInstance(this, junctionRecord).AddRelation();
+        }
+
+
+
         //TODO<IMPORTANT>:Learn about the method completely before implementing the method;
         public object Clone()
         {
-            
             throw new NotImplementedException();
+            /*
+            ZCRMRecord newRecord = (ZCRMRecord)base.MemberwiseClone();
+            newRecord.EntityId = null;
+            newRecord.Properties = null;
+            return newRecord; */
         }
     }
 }

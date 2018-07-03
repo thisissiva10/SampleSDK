@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using SampleSDK.CRM.Library.Api.Handler;
 using SampleSDK.CRM.Library.Api.Response;
 using SampleSDK.CRM.Library.Common;
+using SampleSDK.CRM.Library.CRMException;
+using SampleSDK.CRM.Library.CRUD;
+using SampleSDK.CRM.Library.Setup.Users;
 
 namespace SampleSDK.CRM.Library.Setup.MetaData
 {
@@ -75,10 +80,154 @@ namespace SampleSDK.CRM.Library.Setup.MetaData
         public string Currency_symbol { get => currency_symbol; set => currency_symbol = value; }
 
 
-        //TODO: Handle exceptions;
-        /* public BulkAPIResponse GetAllUsers()
-         {
 
-         }*/
+
+
+        public BulkAPIResponse<ZCRMUser> GetAllUsers()
+        {
+            return GetAllUsers(null);
+        }
+
+
+        public BulkAPIResponse<ZCRMUser> GetAllUsers(string modifiedSince)
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllUsers(modifiedSince, 1, 200);
+        }
+
+        public BulkAPIResponse<ZCRMUser> GetAllUsers(string modifiedSince, int page, int perPage)
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllUsers(modifiedSince, page, perPage);
+        }
+
+
+
+
+        public BulkAPIResponse<ZCRMUser> GetAllActiveConfirmedUsers()
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllActiveConfirmedUsers(1, 200);
+        }
+
+        public BulkAPIResponse<ZCRMUser> GetAllActiveConfirmedUsers(int page, int perPage)
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllActiveConfirmedUsers(page, perPage);
+        }
+
+
+
+
+       
+        public BulkAPIResponse<ZCRMUser> GetAllAdminUsers()
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllAdminUsers(1, 200);
+        }
+
+        public BulkAPIResponse<ZCRMUser> GetAllAdminUsers(int page, int perPage)
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllAdminUsers(page, perPage);
+        }
+
+
+
+        public BulkAPIResponse<ZCRMUser> GetAllActiveUsers()
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllActiveUsers(1, 200);
+        }
+
+        public BulkAPIResponse<ZCRMUser> GetAllActiveUsers(int page, int perPage)
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllActiveUsers(page, perPage);
+        }
+
+
+
+        public BulkAPIResponse<ZCRMUser> GetAllInActiveUsers()
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllDeactivatedUsers(1, 200);
+        }
+
+        public BulkAPIResponse<ZCRMUser> GetAllInActiveUsers(int page, int perPage)
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllDeactivatedUsers(page, perPage);
+        }
+
+
+        public APIResponse GetUser(long userId)
+        {
+            return OrganizationAPIHandler.GetInstance().GetUser(userId);
+        }
+
+
+        public BulkAPIResponse<ZCRMRole> GetAllRoles()
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllRoles();
+        }
+
+
+
+        public APIResponse GetRole(long roleId)
+        {
+            return OrganizationAPIHandler.GetInstance().GetRole(roleId);
+        }
+
+        public BulkAPIResponse<ZCRMProfile> GetAllProfiles()
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllProfiles();
+        }
+
+
+
+        public APIResponse GetProfile(long profileId)
+        {
+            return OrganizationAPIHandler.GetInstance().GetProfile(profileId);
+        }
+
+
+        public BulkAPIResponse<ZCRMOrgTax> GetAllTaxes(long taxId)
+        {
+            return OrganizationAPIHandler.GetInstance().GetAllTaxes();
+        }
+
+
+
+        public APIResponse GetTax(long taxId)
+        {
+            return OrganizationAPIHandler.GetInstance().GetTax(taxId);
+        }
+
+
+        public BulkAPIResponse<ZCRMOrgTax> CreateTaxes(List<ZCRMOrgTax> taxes)
+        {
+            foreach (ZCRMOrgTax tax in taxes)
+            {
+                if (tax.Id != null)
+                {
+                    throw new ZCRMException("Tax ID MUST be null for create operation.");
+                }
+            }
+            return OrganizationAPIHandler.GetInstance().CreateTaxes(taxes);
+        }
+
+
+        public BulkAPIResponse<ZCRMOrgTax> UpdateTaxes(List<ZCRMOrgTax> taxes)
+        {
+            foreach(ZCRMOrgTax tax in taxes)
+            {
+                if(tax.Id == null)
+                {
+                    throw new ZCRMException("Tax ID MUST NOT be null for update operation.");
+                }
+            }
+            return OrganizationAPIHandler.GetInstance().UpdateTaxes(taxes);
+        }
+       
+        public BulkAPIResponse<ZCRMOrgTax> DeleteTaxes(List<long> taxIds)
+        {
+            if(taxIds == null || taxIds.Count == 0)
+            {
+                throw new ZCRMException("Tax ID list MUST NOT be null/empty for delete operation");
+            }
+            return OrganizationAPIHandler.GetInstance().DeleteTaxes(taxIds);
+        }
+
     }
 }

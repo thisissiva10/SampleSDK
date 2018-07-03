@@ -70,16 +70,25 @@ namespace SampleSDK.CRM.Library.Api
             foreach(KeyValuePair<string, string> keyValuePairs in RequestParams)
             {
                 //TODO: Inspect the working of this line;
-                url = url.EndsWith("?", StringComparison.InvariantCulture) ? $"{url}{keyValuePairs.Key}={keyValuePairs.Value}": $"&{url}{keyValuePairs.Key}={keyValuePairs.Value}";
+                if(!string.IsNullOrEmpty(keyValuePairs.Value))
+                {
+                    url = url.EndsWith("?", StringComparison.InvariantCulture) ? $"{url}{keyValuePairs.Key}={keyValuePairs.Value}" : $"{url}&{keyValuePairs.Key}={keyValuePairs.Value}";    
+                }
             }
+            url = url.EndsWith("?", StringComparison.InvariantCulture) ? url.TrimEnd('?') : url;
         }
 
         public void SetHeaders(ref HttpWebRequest request)
         {
             foreach(KeyValuePair<string, string> keyValuePairs in RequestHeaders)
             {
-                request.Headers[keyValuePairs.Key] = keyValuePairs.Value;
+                if(!string.IsNullOrEmpty(keyValuePairs.Value))
+                {
+                    request.Headers[keyValuePairs.Key] = keyValuePairs.Value;   
+                }
             }
+            Console.WriteLine("Headers");
+            Console.WriteLine(request.Headers);
         }
 
         private void AuthenticateRequest()
@@ -148,6 +157,9 @@ namespace SampleSDK.CRM.Library.Api
                 HttpWebRequest request = GetHttpWebRequestClient();
                 SetHeaders(ref request);
                 request.Method = requestMethod.ToString();
+
+                Console.WriteLine(request.Headers);
+                Console.WriteLine(request.Method);
                 if (RequestBody.Count > 0)
                 {
                     Console.WriteLine(RequestBody.ToString());
@@ -162,8 +174,9 @@ namespace SampleSDK.CRM.Library.Api
                     }
                 }
                 response = (HttpWebResponse)request.GetResponse();
-                string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                Console.WriteLine(responseString);
+                Console.WriteLine("Request sent");
+                //string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                //Console.WriteLine(responseString);
             }catch(Exception)
             {
                 throw;
@@ -178,7 +191,7 @@ namespace SampleSDK.CRM.Library.Api
         {
             Console.WriteLine(url);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            if(ZCRMConfigUtil.ConfigProperties.ContainsKey("timeout")){
+            /*if(ZCRMConfigUtil.ConfigProperties.ContainsKey("timeout")){
                 int? timeoutPeriod = Convert.ToInt32(ZCRMConfigUtil.GetConfigValue("timeout"));
                 if (timeoutPeriod != null)
                 {
@@ -190,8 +203,8 @@ namespace SampleSDK.CRM.Library.Api
             if(userAgent != null)
             {
                 request.UserAgent = userAgent;
-            }
-            Console.WriteLine("Request object created");
+            }*/
+            Console.WriteLine($"HttpWebRequestClient created with url {url}\n Timeout{request.Timeout}");
             return request;
         }
 

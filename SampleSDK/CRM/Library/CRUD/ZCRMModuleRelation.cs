@@ -1,4 +1,6 @@
 ﻿using System;
+using SampleSDK.CRM.Library.Api.Handler;
+using SampleSDK.CRM.Library.Api.Response;
 using SampleSDK.CRM.Library.Common;
 
 namespace SampleSDK.CRM.Library.CRUD
@@ -85,7 +87,115 @@ namespace SampleSDK.CRM.Library.CRUD
         public string Type { get => type; set => type = value; }
 
 
-        //TODO: Complete the remaining methods;
+        //TODO: Complete the remaining methods involving Notes;
 
+        public BulkAPIResponse<ZCRMRecord> GetRecords()
+        {
+            return GetRecords(null, null, 1, 20, null);
+        }
+
+
+        public BulkAPIResponse<ZCRMRecord> GetRecords(string sortByField, CommonUtil.SortOrder? sortOrder, int page, int perPage, string modifiedSince)
+        {
+            return RelatedListAPIHandler.GetInstance(ParentRecord, this).GetRecords(sortByField, sortOrder, page, perPage, modifiedSince);
+        }
+
+
+        public BulkAPIResponse<ZCRMNote> GetNotes()
+        {
+            return GetNotes(null, null, 0, 20, null);
+        }
+  
+        public BulkAPIResponse<ZCRMNote> GetNotes(String sortByField, CommonUtil.SortOrder? sortOrder, int page, int per_page, String modifiedSince)
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, this).GetNotes(sortByField, sortOrder, page, per_page, modifiedSince);
+        }
+
+        public APIResponse AddNote(ZCRMNote note)
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, this).AddNote(note);
+        }
+  
+
+        public APIResponse UpdateNote(ZCRMNote note)
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, this).UpdateNote(note);
+        }
+
+
+        public APIResponse DeleteNote(ZCRMNote note)
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, this).DeleteNote(note);
+        }
+  
+
+
+       /* public FileAPIResponse DownloadAttachment(long attachmentId)
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, this).DownloadAttachment(attachmentId);
+        } */
+
+
+
+        public BulkAPIResponse<ZCRMAttachment> GetAllAttachmentsDetails()
+        {
+            return GetAllAttachmentsDetails(0, 20, null);
+        }
+
+
+        public BulkAPIResponse<ZCRMAttachment> GetAllAttachmentsDetails(int page, int per_page, String modifiedSince)
+        {  
+            return RelatedListAPIHandler.GetInstance(parentRecord, this).GetAllAttachmentsDetails(page, per_page, modifiedSince);
+        }
+
+
+
+        /*
+
+
+        public APIResponse UploadAttachment(String filePath)
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, this).UploadAttachment(filePath);
+        }
+
+
+*/
+
+        public APIResponse UploadLinkAsAttachment(String attachmentUrl)
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, this).UploadLinkAsAttachment(attachmentUrl);
+        }
+
+
+
+
+        /*
+
+        public FileAPIResponse downloadAttachment(long attachmentId)
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, this).DownloadAttachment(attachmentId);
+        }
+
+        */
+
+
+        public APIResponse DeleteAttachment(long attachmentId)
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, this).DeleteAttachment(attachmentId);
+        }
+
+
+
+        public APIResponse AddRelation()
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, junctionRecord).AddRelation();
+        }
+
+
+        public APIResponse DeleteRelation()
+        {
+            return RelatedListAPIHandler.GetInstance(parentRecord, junctionRecord).DeleteRelation();
+        }
+        
     }
 }

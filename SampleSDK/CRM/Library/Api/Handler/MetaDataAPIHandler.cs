@@ -26,7 +26,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
             try
             {
                 requestMethod = APIConstants.RequestMethod.GET;
-                urlPath = "settings/modules/";
+                urlPath = "settings/modules";
                 requestHeaders.Add("If-Modified-Since", modifiedSince);
 
                 BulkAPIResponse<ZCRMModule> response = APIRequest.GetInstance(this).GetBulkAPIResponse<ZCRMModule>();
@@ -99,10 +99,11 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 ZCRMProfile profile = ZCRMProfile.GetInstance(Convert.ToInt64(accessibleProfiles.GetValue("id")), Convert.ToString(accessibleProfiles.GetValue("name")));
                 module.AddAccessibleProfiles(profile);
             }
-            if(moduleDetails.GetValue("modified_by") != null)
+            Console.WriteLine(moduleDetails["modified_by"].Type == JTokenType.Null);
+            if(moduleDetails["modified_by"].HasValues)
             {
                 JObject modifiedByObject = (JObject)moduleDetails.GetValue("modified_by");
-                ZCRMUser modifiedUser = ZCRMUser.GetInstance(Convert.ToInt64(modifiedByObject.GetValue("id")), Convert.ToString(modifiedByObject.GetValue("name")));
+                ZCRMUser modifiedUser = ZCRMUser.GetInstance(Convert.ToInt64(modifiedByObject["id"]), Convert.ToString(modifiedByObject.GetValue("name")));
                 module.ModifiedBy = modifiedUser;
                 module.ModifiedTime = Convert.ToString(moduleDetails.GetValue("modified_time"));
             }

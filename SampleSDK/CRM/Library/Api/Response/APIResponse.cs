@@ -31,18 +31,22 @@ namespace SampleSDK.CRM.Library.Api.Response
             JObject msgJSON = ResponseJSON;
             if(msgJSON.ContainsKey("data"))
             {
+                Console.WriteLine("Data present");
                 JArray recordsArray = (JArray)ResponseJSON.GetValue("data");
                 msgJSON = (JObject)recordsArray[0];
             }
 
             if(msgJSON.ContainsKey("message"))
             {
+                Console.WriteLine("messge present");
                 Message = msgJSON.GetValue("message").ToString();
+                Console.WriteLine(Message);
             }
 
             if(msgJSON.ContainsKey("status"))
             {
                 Status = msgJSON.GetValue("status").ToString();
+                Console.WriteLine(Status);
                 if(Status.Equals("error"))
                 {
                     if(msgJSON.ContainsKey("details"))

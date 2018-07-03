@@ -1,9 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Configuration;
 using System.Collections.Generic;
 using SampleSDK.CRM.Library.Common.ConfigFileHandler;
 using Newtonsoft.Json.Linq;
-
+using SampleSDK.CRM.Library.CRMException;
 
 namespace SampleSDK.CRM.Library.Common
 {
@@ -69,10 +70,18 @@ namespace SampleSDK.CRM.Library.Common
 
         //TODO: PhotoSupported method
 
-        //TODO: Check if validate file method is needed or not and implement if needed;
+        //TODO: Inspect the working of this method;
         public static void ValidateFile(string filePath)
         {
-            
+            if(!File.Exists(filePath))
+            {
+                throw new ZCRMException("No such file or directory");
+            }
+            FileInfo fileInfo = new FileInfo(filePath);
+            if(fileInfo.Length/ 1048576L > 20L)
+            {
+                throw new ZCRMException("File size is more than allowed size");
+            }
         }
 
         //TODO: Collection to comma delimited string method;

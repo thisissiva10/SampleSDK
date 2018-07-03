@@ -36,6 +36,7 @@ namespace SampleSDK.CRM.Library.Api.Response
 
         public CommonAPIResponse(HttpWebResponse response)
         {
+            Console.WriteLine("Inside CommonAPIResponse");
             Response = response;
             Init();
             ProcessResponse();
@@ -46,7 +47,9 @@ namespace SampleSDK.CRM.Library.Api.Response
         //TODO: Handle exceptions;
         protected void Init()
         {
+            Console.WriteLine("Init()");
             HttpStatusCode = APIConstants.GetEnum((int)response.StatusCode);
+            Console.WriteLine(HttpStatusCode);
             SetResponseJSON();
         }
 
@@ -74,7 +77,20 @@ namespace SampleSDK.CRM.Library.Api.Response
             }
             else
             {
+                Console.WriteLine(Response);
+                Console.WriteLine(response);
+                //string responseString = "Hello";
+                Console.WriteLine("before streamreader");
+               /* using(StreamReader reader = new StreamReader(Response.GetResponseStream()))
+                {
+                    responseString = reader.ReadToEnd();
+                }*/
                 string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+                Console.Write("Reponse string");
+                Console.Write(responseString);
+                Console.WriteLine();
+                Console.WriteLine("Before JObject conversion");
                 ResponseJSON = JObject.Parse(responseString);
             }
         }

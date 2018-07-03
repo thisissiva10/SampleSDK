@@ -20,9 +20,9 @@ namespace SampleSDK.CRM.Library.CRUD
         //TODO: Inspect the use of dynamic or other types for the below decleration;
         private object defaultValue;
 
-        private int maxLength;
-        private int precision;
-        private int sequenceNo;
+        private int? maxLength;
+        private int? precision;
+        private int? sequenceNo;
         private string toolTip;
         private string createdSource;
         private List<string> subLayoutsPresent = new List<string>();
@@ -63,11 +63,11 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public object DefaultValue { get => defaultValue; set => defaultValue = value; }
 
-        public int SequenceNo { get => sequenceNo; set => sequenceNo = value; }
+        public int? SequenceNo { get => sequenceNo; set => sequenceNo = value; }
 
-        public int MaxLength { get => maxLength; set => maxLength = value; }
+        public int? MaxLength { get => maxLength; set => maxLength = value; }
 
-        public int Precision { get => precision; set => precision = value; }
+        public int? Precision { get => precision; set => precision = value; }
 
         public List<string> SubLayoutsPresent { private get => subLayoutsPresent; set => subLayoutsPresent = value; }
 
