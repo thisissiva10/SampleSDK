@@ -8,5 +8,11 @@ namespace SampleSDK.CRM.Library.CRMException
         public ZCRMLogger() { }
 
 
+        public static void LogInfo(string message)
+        {
+           /* TraceLevel;
+            Trace.WriteLine(); */
+        }
+
     }
 }

@@ -1,5 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="SampleSDK/CRM/Library/Api/Handler/OrganizationAPIHandler.cs">
+    <Files>
+      <File FileName="SampleSDK/CRM/Library/CRMException/ZCRMLogger.cs" Line="14" Column="34" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/OrganizationAPIHandler.cs" Line="564" Column="74" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

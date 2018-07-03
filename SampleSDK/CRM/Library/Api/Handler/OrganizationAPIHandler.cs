@@ -32,7 +32,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 APIResponse response = APIRequest.GetInstance(this).GetAPIResponse();
 
                 JObject responseJSON = response.ResponseJSON;
-                JArray orgArray = (JArray)responseJSON.GetValue("org");
+                JArray orgArray = (JArray)responseJSON["org"];
                 response.Data = GetZCRMOrganization((JObject)orgArray[0]);
                 return response;
             }
@@ -48,28 +48,28 @@ namespace SampleSDK.CRM.Library.Api.Handler
         //TOOD: Handle exceptions;
         private ZCRMOrganization GetZCRMOrganization(JObject orgDetails)
         {
-            ZCRMOrganization organization = ZCRMOrganization.GetInstance(Convert.ToString(orgDetails.GetValue("compan_name")), Convert.ToInt64(orgDetails.GetValue("id")));
-            organization.Alias = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.PrimaryZuid = Convert.ToInt64(orgDetails.GetValue("primary_zuid"));
-            organization.Zgid = Convert.ToInt64(orgDetails.GetValue("zgid"));
-            organization.Phone = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.Mobile = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.Website = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.PrimaryEmail = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.EmployeeCount = Convert.ToInt32(orgDetails.GetValue("alias"));
-            organization.Description = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.Timezone = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.Iso_code = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.Currency_locale = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.Currency_symbol = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.Street = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.State = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.City = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.Country = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.Country_code = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.ZipCode = Convert.ToString(orgDetails.GetValue("alias"));
-            organization.Mc_status = Convert.ToBoolean(orgDetails.GetValue("alias"));
-            organization.Gapps_enabled = Convert.ToBoolean(orgDetails.GetValue("alias"));
+            ZCRMOrganization organization = ZCRMOrganization.GetInstance((string)orgDetails["compan_name"], (long)orgDetails["id"]);
+            organization.Alias = (string)orgDetails["alias"];
+            organization.PrimaryZuid = (long)orgDetails["primary_zuid"];
+            organization.Zgid = (long)orgDetails["zgid"];
+            organization.Phone = (string)orgDetails["alias"];
+            organization.Mobile = (string)orgDetails["alias"];
+            organization.Website = (string)orgDetails["alias"];
+            organization.PrimaryEmail = (string)orgDetails["alias"];
+            organization.EmployeeCount = (int)orgDetails["alias"];
+            organization.Description = (string)orgDetails["alias"];
+            organization.Timezone = (string)orgDetails["alias"];
+            organization.Iso_code = (string)orgDetails["alias"];
+            organization.Currency_locale = (string)orgDetails["alias"];
+            organization.Currency_symbol = (string)orgDetails["alias"];
+            organization.Street = (string)orgDetails["alias"];
+            organization.State = (string)orgDetails["alias"];
+            organization.City = (string)orgDetails["alias"];
+            organization.Country = (string)orgDetails["alias"];
+            organization.Country_code = (string)orgDetails["alias"];
+            organization.ZipCode = (string)orgDetails["alias"];
+            organization.Mc_status = (bool)orgDetails["alias"];
+            organization.Gapps_enabled = (bool)orgDetails["alias"];
 
             return organization;
         }
@@ -92,7 +92,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
 
                 APIResponse response = APIRequest.GetInstance(this).GetAPIResponse();
 
-                JArray usersArray = (JArray)response.ResponseJSON.GetValue("users");
+                JArray usersArray = (JArray)response.ResponseJSON["users"];
                 response.Data = GetZCRMUser((JObject)usersArray[0]);
 
                 return response;
@@ -123,7 +123,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
 
                 List<ZCRMUser> allUsers = new List<ZCRMUser>();
                 JObject responseJSON = response.ResponseJSON;
-                JArray usersArray = (JArray)responseJSON.GetValue("users");
+                JArray usersArray = (JArray)responseJSON["users"];
                 foreach (JObject userJSON in usersArray)
                 {
                     allUsers.Add(GetZCRMUser(userJSON));
@@ -195,61 +195,60 @@ namespace SampleSDK.CRM.Library.Api.Handler
 
         private ZCRMUser GetZCRMUser(JObject userDetails)
         {
-            ZCRMUser user = ZCRMUser.GetInstance(Convert.ToInt64(userDetails.GetValue("id")), Convert.ToString(userDetails.GetValue("full_name")));
-            user.EmailId = Convert.ToString(userDetails.GetValue("email"));
-            user.FirstName = Convert.ToString(userDetails.GetValue("first_name"));
-            user.LastName = Convert.ToString(userDetails.GetValue("last_name"));
-            user.Language = Convert.ToString(userDetails.GetValue("language"));
-            user.Mobile = Convert.ToString(userDetails.GetValue("mobile"));
-            user.Status = Convert.ToString(userDetails.GetValue("status"));
-            user.ZuId = Convert.ToInt64(userDetails.GetValue("zuid"));
-
+            ZCRMUser user = ZCRMUser.GetInstance((long)userDetails["id"], (string)userDetails["full_name"]);
+            user.EmailId = (string)userDetails["email"];
+            user.FirstName = (string)userDetails["first_name"];
+            user.LastName = (string)userDetails["last_name"];
+            user.Language = (string)userDetails["language"];
+            user.Mobile = (string)userDetails["mobile"];
+            user.Status = (string)userDetails["status"];
+            user.ZuId = (long)userDetails["zuid"];
             if (userDetails.ContainsKey("profile"))
             {
-                JObject profileObject = (JObject)userDetails.GetValue("profile");
-                ZCRMProfile profile = ZCRMProfile.GetInstance(Convert.ToInt64(profileObject.GetValue("id")), Convert.ToString(profileObject.GetValue("name")));
+                JObject profileObject = (JObject)userDetails["profile"];
+                ZCRMProfile profile = ZCRMProfile.GetInstance((long)profileObject["id"], (string)profileObject["name"]);
                 user.Profile = profile;
             }
             if (userDetails.ContainsKey("role"))
             {
-                JObject roleObject = (JObject)userDetails.GetValue("role");
-                ZCRMRole role = ZCRMRole.GetInstance(Convert.ToInt64(roleObject.GetValue("id")), Convert.ToString(roleObject.GetValue("name")));
+                JObject roleObject = (JObject)userDetails["role"];
+                ZCRMRole role = ZCRMRole.GetInstance((long)roleObject["id"], (string)roleObject["name"]);
                 user.Role = role;
             }
 
-            user.Alias = Convert.ToString(userDetails.GetValue("alias"));
-            user.City = Convert.ToString(userDetails.GetValue("city"));
-            user.Confirm = Convert.ToBoolean(userDetails.GetValue("confirm"));
-            user.CountryLocale = Convert.ToString(userDetails.GetValue("country_locale"));
-            user.DateFormat = Convert.ToString(userDetails.GetValue("date_format"));
-            user.TimeFormat = Convert.ToString(userDetails.GetValue("time_format"));
-            user.DateOfBirth = Convert.ToString(userDetails.GetValue("dob"));
-            user.Country = Convert.ToString(userDetails.GetValue("country"));
-            user.Fax = Convert.ToString(userDetails.GetValue("fax"));
-            user.Locale = Convert.ToString(userDetails.GetValue("locale"));
-            user.NameFormat = Convert.ToString(userDetails.GetValue("name_format"));
-            user.Website = Convert.ToString(userDetails.GetValue("website"));
-            user.TimeZone = Convert.ToString(userDetails.GetValue("time_zone"));
-            user.Street = Convert.ToString(userDetails.GetValue("street"));
-            user.State = Convert.ToString(userDetails.GetValue("state"));
+            user.Alias = (string)userDetails["alias"];
+            user.City = (string)userDetails["city"];
+            user.Confirm = (bool)userDetails["confirm"];
+            user.CountryLocale = (string)userDetails["country_locale"];
+            user.DateFormat = (string)userDetails["date_format"];
+            user.TimeFormat = (string)userDetails["time_format"];
+            user.DateOfBirth = (string)userDetails["dob"];
+            user.Country = (string)userDetails["country"];
+            user.Fax = (string)userDetails["fax"];
+            user.Locale = (string)userDetails["locale"];
+            user.NameFormat = (string)userDetails["name_format"];
+            user.Website = (string)userDetails["website"];
+            user.TimeZone = (string)userDetails["time_zone"];
+            user.Street = (string)userDetails["street"];
+            user.State = (string)userDetails["state"];
             if (userDetails.ContainsKey("Created_By"))
             {
-                JObject createdByObject = (JObject)userDetails.GetValue("Created_By");
-                ZCRMUser createdUser = ZCRMUser.GetInstance(Convert.ToInt64(createdByObject.GetValue("id")), Convert.ToString(createdByObject.GetValue("name")));
+                JObject createdByObject = (JObject)userDetails["Created_By"];
+                ZCRMUser createdUser = ZCRMUser.GetInstance((long)createdByObject["id"], (string)createdByObject["name"]);
                 user.CreatedBy = createdUser;
-                user.CreatedTime = Convert.ToString(userDetails.GetValue("Created_Time"));
+                user.CreatedTime = (string)userDetails["Created_Time"];
             }
             if (userDetails.ContainsKey("Modified_By"))
             {
-                JObject modifiedByObject = (JObject)userDetails.GetValue("Modified_By");
-                ZCRMUser modifiedByUser = ZCRMUser.GetInstance(Convert.ToInt64(modifiedByObject.GetValue("id")), Convert.ToString(modifiedByObject.GetValue("name")));
+                JObject modifiedByObject = (JObject)userDetails["Modified_By"];
+                ZCRMUser modifiedByUser = ZCRMUser.GetInstance((long)modifiedByObject["id"], (string)modifiedByObject["name"]);
                 user.ModifiedBy = modifiedByUser;
-                user.ModifiedTime = Convert.ToString(userDetails.GetValue("Modified_Time"));
+                user.ModifiedTime = (string)userDetails["Modified_Time"];
             }
             if (userDetails.ContainsKey("Reporting_To"))
             {
-                JObject reportingToObject = (JObject)userDetails.GetValue("Reporting_To");
-                ZCRMUser reportingTo = ZCRMUser.GetInstance(Convert.ToInt64(reportingToObject.GetValue("id")), Convert.ToString(reportingToObject.GetValue("name")));
+                JObject reportingToObject = (JObject)userDetails["Reporting_To"];
+                ZCRMUser reportingTo = ZCRMUser.GetInstance((long)reportingToObject["id"], (string)reportingToObject["name"]);
                 user.ReportingTo = reportingTo;
             }
 
@@ -267,7 +266,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 APIResponse response = APIRequest.GetInstance(this).GetAPIResponse();
 
                 JObject responseJSON = response.ResponseJSON;
-                JArray rolesArray = (JArray)responseJSON.GetValue("roles");
+                JArray rolesArray = (JArray)responseJSON["roles"];
                 response.Data = GetZCRMRole((JObject)rolesArray[0]);
                 return response;
             }
@@ -293,7 +292,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
 
                 List<ZCRMRole> allRoles = new List<ZCRMRole>();
                 JObject responseJSON = response.ResponseJSON;
-                JArray rolesArray = (JArray)responseJSON.GetValue("roles");
+                JArray rolesArray = (JArray)responseJSON["roles"];
                 foreach (JObject roleDetails in rolesArray)
                 {
                     allRoles.Add(GetZCRMRole(roleDetails));
@@ -317,14 +316,14 @@ namespace SampleSDK.CRM.Library.Api.Handler
         //TODO: Handle exceptions;
         private ZCRMRole GetZCRMRole(JObject roleDetails)
         {
-            ZCRMRole role = ZCRMRole.GetInstance(Convert.ToInt64(roleDetails.GetValue("id")), Convert.ToString(roleDetails.GetValue("name")));
-            role.Label = Convert.ToString(roleDetails.GetValue("display_label"));
-            role.AdminUser = Convert.ToBoolean(roleDetails.GetValue("admin_user"));
+            ZCRMRole role = ZCRMRole.GetInstance((long)roleDetails["id"], (string)roleDetails["name"]);
+            role.Label = (string)roleDetails["display_label"];
+            role.AdminUser = (bool)roleDetails["admin_user"];
             ZCRMRole reportingTo = null;
-            if (roleDetails.GetValue("reporting_to") != null)
+            if (roleDetails["reporting_to"] != null)
             {
-                JObject reportingToObject = (JObject)roleDetails.GetValue("reporting_to");
-                reportingTo = ZCRMRole.GetInstance(Convert.ToInt64(reportingToObject.GetValue("id")), Convert.ToString(reportingToObject.GetValue("name")));
+                JObject reportingToObject = (JObject)roleDetails["reporting_to"];
+                reportingTo = ZCRMRole.GetInstance((long)reportingToObject["id"], (string)reportingToObject["name"]);
             }
             role.ReportingTo = reportingTo;
             return role;
@@ -340,7 +339,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 APIResponse response = APIRequest.GetInstance(this).GetAPIResponse();
 
                 JObject responseJSON = response.ResponseJSON;
-                JArray rolesArray = (JArray)responseJSON.GetValue("profiles");
+                JArray rolesArray = (JArray)responseJSON["profiles"];
                 response.Data = GetZCRMProfile((JObject)rolesArray[0]);
                 return response;
             }
@@ -363,7 +362,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
 
                 List<ZCRMProfile> allProfiles = new List<ZCRMProfile>();
                 JObject responseJSON = response.ResponseJSON;
-                JArray profilesArray = (JArray)responseJSON.GetValue("profiles");
+                JArray profilesArray = (JArray)responseJSON["profiles"];
                 foreach (JObject profileDetails in profilesArray)
                 {
                     allProfiles.Add(GetZCRMProfile(profileDetails));
@@ -382,22 +381,22 @@ namespace SampleSDK.CRM.Library.Api.Handler
 
         private ZCRMProfile GetZCRMProfile(JObject profileDetails)
         {
-            ZCRMProfile profile = ZCRMProfile.GetInstance(Convert.ToInt64(profileDetails.GetValue("id")), Convert.ToString(profileDetails.GetValue("name")));
-            profile.Category = Convert.ToBoolean(profileDetails.GetValue("category"));
-            profile.Description = Convert.ToString(profileDetails.GetValue("description"));
-            if (profileDetails.GetValue("created_by") != null)
+            ZCRMProfile profile = ZCRMProfile.GetInstance((long)profileDetails["id"], (string)profileDetails["name"]);
+            profile.Category = (bool)profileDetails["category"];
+            profile.Description = (string)profileDetails["description"];
+            if (profileDetails["created_by"] != null)
             {
-                JObject createdByObject = (JObject)profileDetails.GetValue("created_by");
-                ZCRMUser createdBy = ZCRMUser.GetInstance(Convert.ToInt64(createdByObject.GetValue("id")), Convert.ToString(createdByObject.GetValue("name")));
+                JObject createdByObject = (JObject)profileDetails["created_by"];
+                ZCRMUser createdBy = ZCRMUser.GetInstance((long)createdByObject["id"], (string)createdByObject["name"]);
                 profile.CreatedBy = createdBy;
-                profile.CreatedTime = Convert.ToString(profileDetails.GetValue("created_time"));
+                profile.CreatedTime = (string)profileDetails["created_time"];
             }
-            if (profileDetails.GetValue("modified_by") != null)
+            if (profileDetails["modified_by"] != null)
             {
-                JObject modifiedByObject = (JObject)profileDetails.GetValue("modified_by");
-                ZCRMUser modifiedBy = ZCRMUser.GetInstance(Convert.ToInt64(modifiedByObject.GetValue("id")), Convert.ToString(modifiedByObject.GetValue("name")));
+                JObject modifiedByObject = (JObject)profileDetails["modified_by"];
+                ZCRMUser modifiedBy = ZCRMUser.GetInstance((long)modifiedByObject["id"], (string)modifiedByObject["name"]);
                 profile.ModifiedBy = modifiedBy;
-                profile.ModifiedTime = Convert.ToString(profileDetails.GetValue("modified_time"));
+                profile.ModifiedTime = (string)profileDetails["modified_time"];
             }
 
             return profile;
@@ -413,7 +412,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 APIResponse response = APIRequest.GetInstance(this).GetAPIResponse();
 
                 JObject responseJSON = response.ResponseJSON;
-                JArray taxArray = (JArray)responseJSON.GetValue("taxes");
+                JArray taxArray = (JArray)responseJSON["taxes"];
                 response.Data = GetZCRMOrgTax((JObject)taxArray[0]);
                 return response;
             }
@@ -452,7 +451,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
         private List<ZCRMOrgTax> GetAllZCRMOrgTax(JObject responseJSON)
         {
             List<ZCRMOrgTax> allOrgTaxes = new List<ZCRMOrgTax>();
-            JArray taxArray = (JArray)responseJSON.GetValue("taxes");
+            JArray taxArray = (JArray)responseJSON["taxes"];
             foreach (JObject taxDetails in taxArray)
             {
                 allOrgTaxes.Add(GetZCRMOrgTax(taxDetails));
@@ -462,11 +461,11 @@ namespace SampleSDK.CRM.Library.Api.Handler
 
         private ZCRMOrgTax GetZCRMOrgTax(JObject taxDetails)
         {
-            ZCRMOrgTax tax = ZCRMOrgTax.GetInstance(Convert.ToInt64(taxDetails.GetValue("id")));
-            tax.Name = Convert.ToString(taxDetails.GetValue("name"));
-            tax.DisplayName = Convert.ToString(taxDetails.GetValue("display_label"));
-            tax.Value = Convert.ToDouble(taxDetails.GetValue("value"));
-            tax.Sequence = Convert.ToInt32(taxDetails.GetValue("sequence_number"));
+            ZCRMOrgTax tax = ZCRMOrgTax.GetInstance((long)taxDetails["id"]);
+            tax.Name = (string)taxDetails["name"];
+            tax.DisplayName = (string)taxDetails["display_label"];
+            tax.Value = (double)taxDetails["value"];
+            tax.Sequence = (int)taxDetails["sequence_number"];
             return tax;
         }
 
@@ -510,7 +509,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                     if (entityResponse.Status.Equals("success"))
                     {
                         JObject responseData = entityResponse.ResponseJSON;
-                        JObject responseDetails = (JObject)responseData.GetValue("details");
+                        JObject responseDetails = (JObject)responseData["details"];
                         ZCRMOrgTax tax = GetZCRMOrgTax(responseDetails);
                         createdTaxes.Add(tax);
                         entityResponse.Data = tax;
