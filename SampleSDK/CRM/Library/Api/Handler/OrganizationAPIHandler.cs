@@ -384,14 +384,16 @@ namespace SampleSDK.CRM.Library.Api.Handler
             ZCRMProfile profile = ZCRMProfile.GetInstance((long)profileDetails["id"], (string)profileDetails["name"]);
             profile.Category = (bool)profileDetails["category"];
             profile.Description = (string)profileDetails["description"];
-            if (profileDetails["created_by"] != null)
+            profile.CreatedBy = null;
+            if (profileDetails["created_by"].Type != JTokenType.Null)
             {
                 JObject createdByObject = (JObject)profileDetails["created_by"];
                 ZCRMUser createdBy = ZCRMUser.GetInstance((long)createdByObject["id"], (string)createdByObject["name"]);
                 profile.CreatedBy = createdBy;
                 profile.CreatedTime = (string)profileDetails["created_time"];
             }
-            if (profileDetails["modified_by"] != null)
+            profile.ModifiedBy = null;
+            if (profileDetails["modified_by"].Type != JTokenType.Null)
             {
                 JObject modifiedByObject = (JObject)profileDetails["modified_by"];
                 ZCRMUser modifiedBy = ZCRMUser.GetInstance((long)modifiedByObject["id"], (string)modifiedByObject["name"]);
