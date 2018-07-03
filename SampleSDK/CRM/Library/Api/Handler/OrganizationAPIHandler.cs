@@ -158,7 +158,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
 
         public BulkAPIResponse<ZCRMUser> GetAllDeactivatedUsers(int page, int perPage)
         {
-            return GetUsers("DeactivatedUsers", null, page, perPage);
+            return GetUsers("DeactiveUsers", null, page, perPage);
         }
 
         public BulkAPIResponse<ZCRMUser> GetAllConfirmedUsers(int page, int perPage)
@@ -202,7 +202,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
             user.Language = (string)userDetails["language"];
             user.Mobile = (string)userDetails["mobile"];
             user.Status = (string)userDetails["status"];
-            user.ZuId = (long)userDetails["zuid"];
+            user.ZuId = (long?)userDetails["zuid"];
             if (userDetails.ContainsKey("profile"))
             {
                 JObject profileObject = (JObject)userDetails["profile"];

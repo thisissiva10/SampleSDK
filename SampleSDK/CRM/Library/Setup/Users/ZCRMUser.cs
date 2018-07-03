@@ -6,7 +6,7 @@ namespace SampleSDK.CRM.Library.Setup.Users
     {
 
         private long id;
-        private long zuId;
+        private long? zuId;
         private string firstName;
         private string lastName;
         private string fullName;
@@ -58,7 +58,7 @@ namespace SampleSDK.CRM.Library.Setup.Users
 
         public long Id { get => id; private set => id = value; }
 
-        public long ZuId { get => zuId; set => zuId = value; }
+        public long? ZuId { get => zuId; set => zuId = value; }
 
         public string FirstName { get => firstName; set => firstName = value; }
 

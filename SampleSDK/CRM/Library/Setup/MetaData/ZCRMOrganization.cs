@@ -100,7 +100,7 @@ namespace SampleSDK.CRM.Library.Setup.MetaData
         }
 
 
-
+        //TODO: AllConfirmedUsers, ALLUnConfirmedUsers, AllDeletedUsers get methods to be writter;
 
         public BulkAPIResponse<ZCRMUser> GetAllActiveConfirmedUsers()
         {

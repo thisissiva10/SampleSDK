@@ -2,7 +2,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="SampleSDK/CRM/Library/Api/Handler/OrganizationAPIHandler.cs">
     <Files>
       <File FileName="SampleSDK/CRM/Library/CRMException/ZCRMLogger.cs" Line="14" Column="34" />
-      <File FileName="SampleSDK/CRM/Library/Api/Handler/OrganizationAPIHandler.cs" Line="564" Column="74" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/OrganizationAPIHandler.cs" Line="174" Column="9" />
+      <File FileName="SampleSDK/CRM/Library/Setup/Users/ZCRMUser.cs" Line="13" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
