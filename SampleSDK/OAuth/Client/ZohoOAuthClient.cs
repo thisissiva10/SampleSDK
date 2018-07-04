@@ -4,6 +4,7 @@ using SampleSDK.OAuth.Common;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using SampleSDK.CRM.Library.CRMException;
 
 namespace SampleSDK.OAuth.Client
 {
@@ -54,6 +55,7 @@ namespace SampleSDK.OAuth.Client
                 return tokens.AccessToken;
             }catch(Exception e){
                 Console.WriteLine(e.Message);
+                ZCRMLogger.LogInfo("Access Token expired, Refreshing Access token");
                 tokens = RefreshAccessToken(tokens.RefreshToken, userMailId);
             }
             return tokens.AccessToken;

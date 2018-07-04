@@ -228,24 +228,24 @@ namespace SampleSDK.CRM.Library.Api.Handler
                     ZCRMUser ownerUser = ZCRMUser.GetInstance(Convert.ToInt64(ownerObject.GetValue("id")), Convert.ToString(ownerObject.GetValue("name")));
                     record.Owner = ownerUser;
                 }
-                else if(fieldAPIName.Equals("Layout") && token.Value != null)
+                else if(fieldAPIName.Equals("Layout") && token.Value.Type != JTokenType.Null)
                 {
                     JObject layoutObject = (JObject)token.Value;
                     ZCRMLayout layout = ZCRMLayout.GetInstance(Convert.ToInt64(layoutObject.GetValue("id")));
                     layout.Name = Convert.ToString(layoutObject.GetValue("name"));
                  }
-                else if(fieldAPIName.Equals("Handler") && token.Value != null)
+                else if(fieldAPIName.Equals("Handler") && token.Value.Type != JTokenType.Null)
                 {
                     JObject handlerObject = (JObject)token.Value;
                     ZCRMUser handler = ZCRMUser.GetInstance(Convert.ToInt64(handlerObject.GetValue("id")), Convert.ToString(handlerObject.GetValue("name")));
                     record.SetFieldValue(fieldAPIName, handler);
                 }
-                else if(fieldAPIName.Equals("Remind_At") && token.Value != null)
+                else if(fieldAPIName.Equals("Remind_At") && token.Value.Type == JTokenType.Null)
                 {
                     JObject remindObject = (JObject)token.Value;
                     record.SetFieldValue(fieldAPIName, remindObject.GetValue("ALARM"));
                 }
-                else if(fieldAPIName.Equals("Recurring_Activity") && token.Value != null)
+                else if(fieldAPIName.Equals("Recurring_Activity") && token.Value.Type != JTokenType.Null)
                 {
                     JObject recurringActivityObject = (JObject)token.Value;
                     record.SetFieldValue(fieldAPIName, recurringActivityObject.GetValue("RRULE"));
@@ -261,7 +261,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                         record.AddTax(tax);
                     }
                 }
-                else if (fieldAPIName.Equals("Tax") && token.Value != null)
+                else if (fieldAPIName.Equals("Tax") && token.Value.Type != JTokenType.Null)
                 {
                     JArray taxNames = (JArray)token.Value;
                     int arrayLen = taxNames.Count;
@@ -419,6 +419,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
             foreach(KeyValuePair<string, object> data in recordData)
             {
                 object value = data.Value;
+                Console.WriteLine(data.Key + " - " + value);
                 if(value == null)
                 {
                     value = null;
@@ -447,7 +448,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                     value = jsonArray;
                 }
 
-                recordJSON.Add(data.Key, (JObject)value);
+                recordJSON.Add(data.Key, value.ToString());
             }
         }
 

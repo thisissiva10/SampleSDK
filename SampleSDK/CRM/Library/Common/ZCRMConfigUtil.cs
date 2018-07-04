@@ -51,6 +51,8 @@ namespace SampleSDK.CRM.Library.Common
                 Console.WriteLine("update method called");
                 UpdateConfigBaseUrl(ConfigProperties["domainSuffix"]);
             }
+            ZCRMLogger.Init();
+            ZCRMLogger.LogInfo("Initialiazed");
             //TODO: Log the information along with ConfigProperties;
 
         }

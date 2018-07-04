@@ -98,9 +98,9 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 foreach (long id in entityIds)
                 {
                     JObject updateJSON = new JObject();
-                    //TODO: Check the below line;
-                    updateJSON.Add(fieldAPIName, (JToken)value);
-                    updateJSON.Add("id", Convert.ToString("id"));
+                    //TODO: Check the below line on the usage of arrays;
+                    updateJSON.Add(fieldAPIName, value.ToString());
+                    updateJSON.Add("id", Convert.ToString(id));
                     dataArray.Add(updateJSON);
                 }
                 requestBodyObject.Add("data", dataArray);
@@ -152,7 +152,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 foreach (ZCRMRecord record in records)
                 {
                     JObject recordJSON = EntityAPIHandler.GetInstance(record).GetZCRMRecordAsJSON();
-                    recordJSON.Add("id", record.EntityId);
+                   // recordJSON.Add("id", record.EntityId);
                     dataArray.Add(recordJSON);
                 }
                 requestBodyObject.Add("data", dataArray);

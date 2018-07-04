@@ -177,9 +177,11 @@ namespace SampleSDK.CRM.Library.Api
                 Console.WriteLine("Request sent");
                 //string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
                 //Console.WriteLine(responseString);
-            }catch(Exception)
+            }catch(Exception e)
             {
-                throw;
+                Console.WriteLine("Exception in GetResponseFromServer");
+                Console.WriteLine(e);
+                 throw;
             }
 
         }

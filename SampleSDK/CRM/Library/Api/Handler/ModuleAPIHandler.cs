@@ -111,7 +111,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
             {
 
                 requestMethod = APIConstants.RequestMethod.GET;
-                urlPath = "settings/fields";
+                urlPath = "settings/custom_views";
                 requestQueryParams.Add("module", module.ApiName);
                 requestHeaders.Add("If-Modified-Since", modifiedSince);
 

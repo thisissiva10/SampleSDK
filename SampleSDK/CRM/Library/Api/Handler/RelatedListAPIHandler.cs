@@ -419,18 +419,25 @@ namespace SampleSDK.CRM.Library.Api.Handler
             {
                 //TODO: Didn't check null value;
                 object value = keyValuePairs.Value;
+                Console.WriteLine(keyValuePairs.Key + " = " + value);
+                if(value == null)
+                {
+                    relatedDetailsJSON.Add(keyValuePairs.Key, JToken.Parse(null));
+                }
                 if(value is long)
                 {
                     value = Convert.ToString(value);
                 }
-                relatedDetailsJSON.Add(keyValuePairs.Key, (JToken)value);
+                relatedDetailsJSON.Add(keyValuePairs.Key, value.ToString());
             }
             return relatedDetailsJSON;
         }
 
         public APIResponse DeleteRelation()
         {
+            Console.WriteLine("DeleteRelation() Method");
             requestMethod = APIConstants.RequestMethod.DELETE;
+            Console.WriteLine(requestMethod);
             urlPath = $"{parentRecord.ModuleAPIName}/{parentRecord.EntityId}/{junctionRecord.ApiName}/{junctionRecord.Id}";
 
             return APIRequest.GetInstance(this).GetAPIResponse();

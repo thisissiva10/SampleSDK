@@ -1,10 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="SampleSDK/CRM/Library/Api/Handler/OrganizationAPIHandler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SampleSDK/CRM/Library/CRMException/ZCRMLogger.cs">
     <Files>
-      <File FileName="SampleSDK/CRM/Library/CRMException/ZCRMLogger.cs" Line="14" Column="34" />
-      <File FileName="SampleSDK/CRM/Library/Api/Handler/OrganizationAPIHandler.cs" Line="42" Column="48" />
-      <File FileName="SampleSDK/CRM/Library/Setup/Users/ZCRMUser.cs" Line="13" Column="30" />
-      <File FileName="SampleSDK/CRM/Library/Api/APIConstants.cs" Line="57" Column="45" />
+      <File FileName="SampleSDK/CRM/Library/CRMException/ZCRMLogger.cs" Line="22" Column="10" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/ModuleAPIHandler.cs" Line="114" Column="49" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/EntityAPIHandler.cs" Line="190" Column="1" />
+      <File FileName="SampleSDK/CRM/Library/Api/Handler/MassEntityAPIHandler.cs" Line="103" Column="63" />
+      <File FileName="SampleSDK/CRM/Library/Api/APIRequest.cs" Line="167" Column="25" />
+      <File FileName="SampleSDK/CRM/Library/CRUD/ZCRMRecord.cs" Line="307" Column="77" />
+      <File FileName="SampleSDK/CRM/Library/Common/ZCRMConfigUtil.cs" Line="55" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

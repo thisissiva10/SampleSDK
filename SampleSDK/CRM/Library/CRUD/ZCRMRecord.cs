@@ -306,7 +306,7 @@ namespace SampleSDK.CRM.Library.CRUD
 
         public APIResponse DeleteRelation(ZCRMJunctionRecord junctionRecord)
         {
-            return ZCRMModuleRelation.GetInstance(this, junctionRecord).AddRelation();
+            return ZCRMModuleRelation.GetInstance(this, junctionRecord).DeleteRelation();
         }
 
 
