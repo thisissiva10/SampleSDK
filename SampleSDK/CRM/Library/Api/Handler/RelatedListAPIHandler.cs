@@ -218,7 +218,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
         }
 
         //TODO: Handle Exceptions <IMPORTANT = Handle UploadFile method in APIRequest>;
-        /*public APIResponse UploadAttachment(string filePath)
+        public APIResponse UploadAttachment(string filePath)
         {
             //TODO: Validate File <IMPORTANT>
             try
@@ -226,6 +226,7 @@ namespace SampleSDK.CRM.Library.Api.Handler
                 requestMethod = APIConstants.RequestMethod.POST;
                 urlPath = $"{parentRecord.ModuleAPIName}/{parentRecord.EntityId}/{relatedList.ApiName}";
 
+                ZCRMLogger.LogInfo("urlPath : "+urlPath);
                 APIResponse response = APIRequest.GetInstance(this).UploadFile(filePath);
 
                 JArray responseDataArray = (JArray)response.ResponseJSON.GetValue("data");
@@ -237,11 +238,11 @@ namespace SampleSDK.CRM.Library.Api.Handler
             catch (Exception e)
             {
                 //TODO: Log the exception;
-                Console.WriteLine("Exception in Addnote");
+                Console.WriteLine("Exception in UploadAttachment");
                 Console.WriteLine(e);
                 throw new ZCRMException("ZCRM_INTERNAL_ERROR");
             }
-        }*/
+        }
 
         public APIResponse UploadLinkAsAttachment(string attachmentUrl)
         {
@@ -270,13 +271,13 @@ namespace SampleSDK.CRM.Library.Api.Handler
             
         }
 
-        /*public FileAPIResponse DownloadAttachment(long attachmentId)
+        public FileAPIResponse DownloadAttachment(long attachmentId)
         {
             requestMethod = APIConstants.RequestMethod.GET;
             urlPath = $"{parentRecord.ModuleAPIName}/{parentRecord.EntityId}/{relatedList.ApiName}/{attachmentId}";
 
             return APIRequest.GetInstance(this).DownloadFile();
-        } */
+        }
 
 
         //TODO: Handle Exceptions

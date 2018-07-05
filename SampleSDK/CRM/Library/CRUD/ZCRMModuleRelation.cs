@@ -150,7 +150,7 @@ namespace SampleSDK.CRM.Library.CRUD
 
 
 
-        /*
+
 
 
         public APIResponse UploadAttachment(String filePath)
@@ -159,7 +159,7 @@ namespace SampleSDK.CRM.Library.CRUD
         }
 
 
-*/
+
 
         public APIResponse UploadLinkAsAttachment(String attachmentUrl)
         {
@@ -169,14 +169,14 @@ namespace SampleSDK.CRM.Library.CRUD
 
 
 
-        /*
 
-        public FileAPIResponse downloadAttachment(long attachmentId)
+
+        public FileAPIResponse DownloadAttachment(long attachmentId)
         {
             return RelatedListAPIHandler.GetInstance(parentRecord, this).DownloadAttachment(attachmentId);
         }
 
-        */
+
 
 
         public APIResponse DeleteAttachment(long attachmentId)

@@ -259,26 +259,26 @@ namespace SampleSDK.CRM.Library.CRUD
         }
 
 
-        /*
+
 
         public APIResponse UploadAttachment(String filePath)
         {
             return ZCRMModuleRelation.GetInstance(this, "Attachments").UploadAttachment(filePath);
         }
 
-*/
+
 
         public APIResponse UploadLinkAsAttachment(String attachmentUrl)
         {
             return ZCRMModuleRelation.GetInstance(this, "Attachments").UploadLinkAsAttachment(attachmentUrl);
         }
-        /*
-        public APIResponse DownloadAttachment(long attachmentId)
+
+        public FileAPIResponse DownloadAttachment(long attachmentId)
         {
             return ZCRMModuleRelation.GetInstance(this, "Attachments").DownloadAttachment(attachmentId);
         }
 
-*/
+
 
         public APIResponse DeleteAttachment(long attachmentId)
         {

@@ -3,6 +3,8 @@ using System.Net;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
+using SampleSDK.CRM.Library.CRMException;
+using System.Collections.Generic;
 
 namespace SampleSDK.CRM.Library.Api.Response
 {
@@ -14,8 +16,9 @@ namespace SampleSDK.CRM.Library.Api.Response
         //TODO: Define enum responsecodes and work out the functions in that class;
         private APIConstants.ResponseCode? httpStatusCode;
         private ResponseHeaders responseHeaders;
+      //  private MemoryStream responseStream;
 
-        private HttpWebResponse Response { get => response; set => response = value; }
+        internal HttpWebResponse Response { get => response; set => response = value; }
 
         //NOTE: Because of naming collision, the properties have been changed to properties;
         protected ResponseHeaders GetResponseHeaders()
@@ -31,6 +34,7 @@ namespace SampleSDK.CRM.Library.Api.Response
 
         internal JObject ResponseJSON { get => responseJSON; set => responseJSON = value; }
 
+       // public MemoryStream ResponseStream { get => responseStream; private set => responseStream = value; }
 
         public CommonAPIResponse() { }
 
@@ -38,6 +42,10 @@ namespace SampleSDK.CRM.Library.Api.Response
         {
             Console.WriteLine("Inside CommonAPIResponse");
             Response = response;
+            for (int i = 0; i < response.Headers.Count; i++)
+            {
+                ZCRMLogger.LogInfo(response.Headers.Keys[i] + " - " + response.Headers[i]);
+            }
             Init();
             ProcessResponse();
             //TODO:Log info;
@@ -50,6 +58,7 @@ namespace SampleSDK.CRM.Library.Api.Response
             Console.WriteLine("Init()");
             HttpStatusCode = APIConstants.GetEnum((int)response.StatusCode);
             Console.WriteLine(HttpStatusCode);
+          //  ResponseStream = CopyStream(response.GetResponseStream());
             SetResponseJSON();
         }
 
@@ -69,7 +78,7 @@ namespace SampleSDK.CRM.Library.Api.Response
         }
 
         //TODO: Handle exceptions
-        protected void SetResponseJSON()
+        protected virtual void SetResponseJSON()
         {
             if((APIConstants.ResponseCode.NO_CONTENT == HttpStatusCode) || (APIConstants.ResponseCode.NOT_MODIFIED == HttpStatusCode))
             {
@@ -77,17 +86,10 @@ namespace SampleSDK.CRM.Library.Api.Response
             }
             else
             {
-                Console.WriteLine(Response);
-                Console.WriteLine(response);
-                //string responseString = "Hello";
-                Console.WriteLine("before streamreader");
-               /* using(StreamReader reader = new StreamReader(Response.GetResponseStream()))
-                {
-                    responseString = reader.ReadToEnd();
-                }*/
                 string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                //ResponseStream.Position = 0;
 
-                Console.Write("Reponse string");
+                Console.Write("Reponse string : ");
                 Console.Write(responseString);
                 Console.WriteLine();
                 Console.WriteLine("Before JObject conversion");
@@ -110,6 +112,24 @@ namespace SampleSDK.CRM.Library.Api.Response
         }
 
 
+
+        /*
+        private MemoryStream CopyStream(Stream inputStream)
+        {
+            ResponseStream = new MemoryStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead = 0;
+            while((bytesRead = inputStream.Read(buffer, 0, buffer.Length)) != 0)
+            {
+                ResponseStream.Write(buffer, 0, bytesRead);
+            }
+            ResponseStream.Position = 0;
+            inputStream.Close();
+            inputStream.Dispose();
+            return ResponseStream;
+        }
+
+*/
 
 
         //TODO: Inspect the usage of static modifier in the below class;

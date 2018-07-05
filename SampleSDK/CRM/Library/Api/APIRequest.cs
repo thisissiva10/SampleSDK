@@ -21,6 +21,8 @@ namespace SampleSDK.CRM.Library.Api
         private Dictionary<string, string> requestParams = new Dictionary<string, string>();
         private JObject requestBody;
         private HttpWebResponse response = null;
+        private static string boundary = "---------fileBoundary1234567890";
+        private Stream fileRequestBody;
 
         public Dictionary<string, string> RequestHeaders { get => requestHeaders; private set => requestHeaders = value; }
         public Dictionary<string, string> RequestParams { get => requestParams; private set => requestParams = value; }
@@ -160,28 +162,57 @@ namespace SampleSDK.CRM.Library.Api
 
                 Console.WriteLine(request.Headers);
                 Console.WriteLine(request.Method);
-                if (RequestBody.Count > 0)
+                Console.WriteLine(RequestBody.Type);
+
+                //Post JSON part;
+                if (RequestBody.Type != JTokenType.Null && RequestBody.Count > 0)
                 {
                     Console.WriteLine(RequestBody.ToString());
-                    Console.WriteLine("Populating request body");
+                    ZCRMLogger.LogInfo("Populating Request Body");
                     string dataString = RequestBody.ToString();
                     var data = Encoding.ASCII.GetBytes(dataString);
                     int dataLength = data.Length;
                     request.ContentType = "application/json";
+                    request.ContentLength = dataLength;
                     using (var writer = request.GetRequestStream())
                     {
                         writer.Write(data, 0, dataLength);
                     }
                 }
+                //File Upload Request
+                //TODO: Test this part;
+                else if(fileRequestBody != null && fileRequestBody.Length != 0)
+                {
+                    ZCRMLogger.LogInfo("Inside file upload request");
+                    long fileDataLength = fileRequestBody.Length;
+                    request.ContentType = $"multipart/form-data; boundary={boundary}";
+                    request.ContentLength = fileDataLength;
+                    request.UserAgent = "Mozilla/5.0";
+                    fileRequestBody.Position = 0;
+                    ZCRMLogger.LogInfo("FileRequestBody position : " +fileRequestBody.Position);
+                    ZCRMLogger.LogInfo("Request Body Length : "+fileDataLength);
+                    byte[] data = new byte[1024];
+                    int bytesRead = 0;
+                    Stream test = new MemoryStream();
+                    using (var writer = request.GetRequestStream())
+                    {
+                        while((bytesRead = fileRequestBody.Read(data, 0, data.Length))!= 0)
+                        {
+                          //  test.Write(data, 0, bytesRead);
+                            writer.Write(data, 0, bytesRead);
+                        }
+                    }
+                    //test.Position = 0;
+                    //ZCRMLogger.LogInfo("Stream");
+                    //ZCRMLogger.LogInfo(new StreamReader(test).ReadToEnd());
+                }
                 response = (HttpWebResponse)request.GetResponse();
-                Console.WriteLine("Request sent");
-                //string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                //Console.WriteLine(responseString);
+                ZCRMLogger.LogInfo("Received the response");
             }catch(Exception e)
             {
                 Console.WriteLine("Exception in GetResponseFromServer");
                 Console.WriteLine(e);
-                 throw;
+                throw new ZCRMException(e.ToString());
             }
 
         }
@@ -225,5 +256,60 @@ namespace SampleSDK.CRM.Library.Api
         //TODO: GetResponseFromServer Method ----Performs almost all the tasks and process the requests and populates the response;
         //NOTE: GetHTTPClient Method sets timeout and user-agent<Similar to getZohoConnector()>;
         //TODO: File upload and download methods();
+
+
+        public APIResponse UploadFile(string filePath)
+        {
+            fileRequestBody = GetFileRequestBodyStream(filePath);
+            GetResponseFromServer();
+            return new APIResponse(response);
+
+        }
+
+        public FileAPIResponse DownloadFile()
+        {
+            try{
+                GetResponseFromServer();
+                return new FileAPIResponse(response);
+            }catch(Exception e)
+            {
+                ZCRMLogger.LogError(e.ToString());
+                throw new ZCRMException(e.ToString());
+            }
+        }
+
+
+        private Stream GetFileRequestBodyStream(string filePath)
+        {
+            Stream fileDataStream = new MemoryStream();
+
+            FileInfo fileInfo = new FileInfo(filePath);
+
+            //File Content-Disposition header;
+            string fileHeader = string.Format($"\r\n--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"{fileInfo.Name}\"\r\nContent-Type: {fileInfo.Extension}\r\n\r\n");
+            byte[] fileHeaderBytes = Encoding.ASCII.GetBytes(fileHeader);
+            fileDataStream.Write(fileHeaderBytes, 0, fileHeaderBytes.Length);
+
+
+            //File content 
+            byte[] buffer = new byte[1024];
+            int bytesRead = 0;
+            using (FileStream fileStream = fileInfo.OpenRead())
+            {
+                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+                {
+                    fileDataStream.Write(buffer, 0, bytesRead);
+                }
+            }
+
+            //Footer
+            byte[] fileFooterBytes = Encoding.ASCII.GetBytes("--" + boundary + "--");
+            fileDataStream.Write(fileFooterBytes, 0, fileFooterBytes.Length);
+            fileDataStream.Position = 0;
+            ZCRMLogger.LogInfo(new StreamReader(fileDataStream).ReadToEnd());
+            ZCRMLogger.LogInfo("Line position : " + fileDataStream.Position);
+            fileDataStream.Position = 0;
+            return fileDataStream;
+        }
     }
 }

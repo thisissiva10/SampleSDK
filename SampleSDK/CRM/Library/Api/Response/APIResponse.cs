@@ -22,7 +22,7 @@ namespace SampleSDK.CRM.Library.Api.Response
 
         public ZCRMEntity Data { get => data; set => data = value; }
         public string Message { get => message; private set => message = value; }
-        public string Status { get => status; private set => status = value; }
+        public string Status { get => status; internal set => status = value; }
 
 
         //TODO: Handle exceptions;
